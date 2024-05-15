@@ -1,0 +1,57 @@
+/* .nav-widget-wrapper ul.categories-list li.category-item .sub-category-lvl-two{
+    display:none
+} */
+.nav-widget-wrapper .category-dropdown .categories-list .category-item:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 187 56 / var(--tw-bg-opacity));
+}
+
+.category .category-dropdown .categories-list .category-item {
+  border-top: 1px solid #f8f8f8;
+}
+
+.nav-widget-wrapper ul.categories-list li.category-item .sub-category-lvl-two ul li:hover .sub-category-lvl-three,
+.nav-widget-wrapper ul.categories-list li.category-item:hover .sub-category-lvl-two {
+  display: block;
+}
+
+.nav-widget-wrapper ul.categories-list li.category-item .sub-category-lvl-two,
+.nav-widget-wrapper ul.categories-list li.category-item .sub-category-lvl-two .sub-category-lvl-three {
+  display: none;
+}
+
+.nav-widget-wrapper .nav ul li .sub-menu {
+  transition: all .5s ease-in-out;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: auto;
+}
+
+.nav-widget-wrapper .nav ul li:hover .sub-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.box {
+  box-shadow: rgba(0, 0, 0, 0.14) 0px 15px 50px 0px;
+}
+
+.height {
+  height: 0px;
+}
+
+li.category-item:hover .height {
+  height: 440px;
+}
+
+.boxHeight {
+  min-height: 295px;
+  box-shadow: rgba(0, 0, 0, 0.14) 0px 15px 50px 0px;
+}
+
+.background {
+  background-image: url("https://api.websolutionus.com/shopo/uploads/website-images/Mega-menu-2022-10-27-01-44-55-7811.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}

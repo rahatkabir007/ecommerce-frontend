@@ -1,0 +1,45 @@
+.about-content ul li:before,
+.product-specifications ul li:before {
+    content: "\2713";
+    display: inline-block;
+    font-weight: 700;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 25px;
+    color: #fff;
+    margin-right: 15px;
+    display: inline-block;
+    font-weight: 700;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 25px;
+}
+
+.checkmark {
+    width: 25px;
+    height: 25px;
+    color: #ffbb38;
+    margin-right: 10px;
+
+}
+
+.yellow-btn {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    --tw-bg-opacity: 1;
+    background-color: rgb(255 187 56/var(--tw-bg-opacity));
+    font-size: 13px;
+    font-weight: 600;
+    --tw-text-opacity: 1;
+    color: rgb(29 29 29/var(--tw-text-opacity));
+    line-height: 0;
+}
+
+/* :before {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+} */

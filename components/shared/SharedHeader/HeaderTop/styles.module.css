@@ -1,0 +1,132 @@
+.cart-wrappwer {
+    border-color: rgb(255 187 56);
+}
+
+.spanStyle {
+    box-sizing: border-box;
+    display: inline-block;
+    overflow: hidden;
+    width: initial;
+    height: initial;
+    background: none;
+    opacity: 1;
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+    position: relative;
+    max-width: 100%
+}
+
+.spanStyle2 {
+    box-sizing: border-box;
+    display: block;
+    width: initial;
+    height: initial;
+    background: none;
+    opacity: 1;
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+    max-width: 100%
+}
+
+.imgStyle {
+    box-sizing: border-box;
+    display: block;
+    width: 0px;
+    height: 0px;
+    border: none;
+    margin: auto;
+    padding: 0px;
+    position: absolute;
+    inset: 0px;
+    max-width: 100%;
+    max-height: 100%;
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: scale-down,
+}
+
+.imgStyle2 {
+    display: block;
+    width: initial;
+    height: initial;
+    border: none;
+    margin: auto;
+    padding: 0px;
+    max-width: 100%;
+    max-height: 100%;
+    min-width: 100%
+}
+
+/* .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 5px;
+    padding: 20px;
+} */
+
+.gray-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .875rem;
+    line-height: 1.25rem;
+    font-weight: 600;
+    background: #f0f1f3;
+}
+
+.search-input {
+    height: 100%;
+    width: 100%;
+    padding-left: 1.25rem;
+    font-size: .75rem;
+    line-height: 1rem;
+    font-weight: 500;
+    outline: none;
+}
+
+.line-clamp-1 {
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+
+.search-btn {
+    background-color: rgb(255 187 56/1);
+    color: rgb(34 34 34/1);
+}
+
+.sideDropdownScrollStyle::-webkit-scrollbar {
+    visibility: hidden;
+}
+
+
+
+.productItems::-webkit-scrollbar {
+    width: 2px !important;
+
+}
+
+.productItems::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+
+}
+
+.productItems::-webkit-scrollbar-thumb {
+    background-color: lightgray;
+    outline: 1px solid lightgray;
+    border-radius: 6px;
+}

@@ -1,0 +1,92 @@
+.yellow-btn {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(255 187 56/1);
+    font-size: 13px;
+    font-weight: 600;
+    color: rgb(29 29 29/1);
+    line-height: 0;
+}
+
+.yellow-btn .btn-content {
+    transition: all 0.5s ease-in-out;
+}
+
+.yellow-btn:hover .btn-content {
+    color: rgb(255 255 255/1);
+}
+
+.yellow-btn .bg-shape {
+    left: -500px;
+    transition: all 0.5s ease-in-out;
+}
+
+.yellow-btn:hover .bg-shape {
+    left: 0;
+}
+
+.product-card-one {
+    border: 1px solid transparent;
+}
+
+.anim {
+    position: absolute;
+    background-color: #ffbb38;
+    transform-origin: center;
+    transition: transform .5s ease;
+}
+
+.bottom {
+    bottom: 0;
+    height: 1px;
+    left: 0;
+    right: 0;
+    transform: scaleX(0);
+}
+
+.right {
+    right: 0;
+    width: 1px;
+    top: 0;
+    bottom: 0;
+    transform: scaleY(0);
+}
+
+.top {
+    top: 0;
+    height: 1px;
+    left: 0;
+    right: 0;
+    transform: scaleX(0);
+}
+
+.left {
+    left: 0;
+    width: 1px;
+    top: 0;
+    bottom: 0;
+    transform: scaleY(0);
+}
+
+.product-card-one:hover~span.bottom {
+    transform: scaleX(1);
+    cursor: pointer;
+}
+
+.product-card-one:hover~span.right {
+    transform: scaleY(1);
+    cursor: pointer;
+}
+
+.product-card-one:hover~span.top {
+    transform: scaleX(1);
+    cursor: pointer;
+}
+
+.product-card-one:hover~span.left {
+    transform: scaleY(1);
+    cursor: pointer;
+}

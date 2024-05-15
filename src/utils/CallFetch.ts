@@ -1,0 +1,74 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { MyFetchInterface } from "../../interfaces/MyFetchInterface";
+
+export const callFetch = async (
+  url: string,
+  requestOptions: unknown
+): Promise<MyFetchInterface> => {
+  return new Promise((resolve) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
+    fetch(url, requestOptions)
+      .then((response) => {
+        return response.json();
+      })
+      .then((result) => {
+        // console.log("res", result);
+
+        if (result?.statusCode >= 400) {
+          resolve({
+            res: null,
+            err: result.message || 400,
+          });
+        } else {
+          resolve({
+            res: result,
+            err: null,
+          });
+        }
+      })
+      .catch((error) => {
+        // callback(null, error)
+        resolve({
+          res: null,
+          err: error,
+        });
+      });
+  });
+};
+
+export const callFetch2 = async (
+  url: string,
+  requestOptions: unknown
+): Promise<MyFetchInterface> => {
+  return new Promise((resolve) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
+    fetch(url, requestOptions)
+      .then((response) => {
+        return response.json();
+      })
+      .then((result) => {
+        console.log("res", result);
+        if (result?.statusCode >= 400) {
+          resolve({
+            res: null,
+            err: result.message || 400,
+          });
+        } else {
+          resolve({
+            res: result,
+            err: null,
+          });
+        }
+      })
+      .catch((error) => {
+        // callback(null, error)
+        resolve({
+          res: null,
+          err: error,
+        });
+      });
+  });
+};

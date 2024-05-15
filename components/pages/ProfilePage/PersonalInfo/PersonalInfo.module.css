@@ -1,0 +1,19 @@
+.file {
+  display: inline-block;
+  /* display: hidden; */
+
+  width: 18%;
+  padding: 46px 0 0 46px;
+  height: 10px;
+  margin-left: 234px;
+  /* margin-top: -75px; */
+  overflow-x: hidden;
+  overflow: hidden;
+  cursor: pointer;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  /* background: url("https://www.dictionary.com/e/wp-content/uploads/2018/12/20200713_yellowHeart_1000x700.png")
+    center center no-repeat #fff; */
+  border-radius: 999px;
+}

@@ -1,0 +1,311 @@
+[
+  {
+    "slug": "product_slug_1",
+    "productName": "Iphone 11",
+    "catSlug": "mobile_slug",
+    "subCatSlug": "mobile_slug",
+    "brandSlug": "mobile_slug",
+    "price": 1000,
+    "description": "bad",
+    "status": "inactive",
+    "imageURL": [
+      "https://shopo-ecom.vercel.app/_next/image?url=https%3A%2F%2Fapi.websolutionus.com%2Fshopo%2Fuploads%2Fcustom-images%2Fsamsung-galaxy-a52-8128-gb-2022-09-26-12-12-12-9319.png&w=1920&q=75"
+    ],
+    "offerPrice": 1000,
+    "stock": 9,
+    "weight": 10,
+    "seoTitle": "Seo",
+    "seoDescription": "seo description",
+    "isTopProduct": true,
+    "isNewArrival": true,
+    "isBestProduct": false,
+    "isFeatured": true,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1674709995718"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1674709995718"
+      }
+    },
+    "__v": 0,
+    "isPopular": false
+  },
+
+  {
+    "slug": "product_slug_2",
+    "productName": "Iphone 12",
+    "catSlug": "mobile_slug",
+    "subCatSlug": "mobile_slug",
+    "brandSlug": "mobile_slug",
+    "price": 10000,
+    "description": "bad",
+    "status": "inactive",
+    "imageURL": [
+      "https://shopo-ecom.vercel.app/_next/image?url=https%3A%2F%2Fapi.websolutionus.com%2Fshopo%2Fuploads%2Fcustom-images%2Fsamsung-galaxy-a52-8128-gb-2022-09-26-12-12-12-9319.png&w=1920&q=75"
+    ],
+    "offerPrice": 9999,
+    "stock": 100,
+    "weight": 102,
+    "seoTitle": "Seo",
+    "seoDescription": "seo description",
+    "isTopProduct": false,
+    "isNewArrival": false,
+    "isBestProduct": true,
+    "isFeatured": true,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1674710035804"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1674710035804"
+      }
+    },
+    "__v": 0,
+    "isPopular": true
+  },
+  {
+    "slug": "product_slug_3",
+    "productName": "One Plus 9R",
+    "catSlug": "mobile_slug",
+    "subCatSlug": "mobile_slug",
+    "brandSlug": "mobile_slug",
+    "price": 999,
+    "description": "EEEE",
+    "status": "inactive",
+    "imageURL": [
+      "https://shopo-ecom.vercel.app/_next/image?url=https%3A%2F%2Fapi.websolutionus.com%2Fshopo%2Fuploads%2Fcustom-images%2Fsamsung-galaxy-a52-8128-gb-2022-09-26-12-12-12-9319.png&w=1920&q=75"
+    ],
+    "offerPrice": 888,
+    "stock": 8,
+    "weight": 5,
+    "seoTitle": "seotitle",
+    "seoDescription": "seodescription",
+    "isTopProduct": true,
+    "isNewArrival": false,
+    "isBestProduct": false,
+    "isFeatured": false,
+    "isPopular": true,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1674712270523"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1674712270523"
+      }
+    },
+    "__v": 0
+  },
+
+  {
+    "slug": "product_slug_4",
+    "productName": "Realme mini music1",
+    "catSlug": "electronics_slug",
+    "subCatSlug": "electronics_slug",
+    "brandSlug": "electronics_slug",
+    "price": 1000,
+    "description": "EE",
+    "status": "active",
+    "imageURL": [
+      "https://shopo-ecom.vercel.app/_next/image?url=https%3A%2F%2Fapi.websolutionus.com%2Fshopo%2Fuploads%2Fcustom-images%2Frealme-mini-music-2022-09-26-01-34-10-1954.png&w=1920&q=75"
+    ],
+    "offerPrice": 88,
+    "stock": 8,
+    "weight": 5,
+    "seoTitle": "seotitle",
+    "seoDescription": "seodescription",
+    "isTopProduct": true,
+    "isNewArrival": false,
+    "isBestProduct": true,
+    "isFeatured": false,
+    "isPopular": true,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1674712780336"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1674714131127"
+      }
+    },
+    "__v": 0
+  },
+
+  {
+    "slug": "product_slug_5",
+    "productName": "Realme mini music2",
+    "catSlug": "electronics_slug",
+    "subCatSlug": "electronics_slug",
+    "brandSlug": "electronics_slug",
+    "price": 1000,
+    "description": "EE",
+    "status": "active",
+    "imageURL": [
+      "https://shopo-ecom.vercel.app/_next/image?url=https%3A%2F%2Fapi.websolutionus.com%2Fshopo%2Fuploads%2Fcustom-images%2Frealme-mini-music-2022-09-26-01-34-10-1954.png&w=1920&q=75"
+    ],
+    "offerPrice": 88,
+    "stock": 8,
+    "weight": 5,
+    "seoTitle": "seotitle",
+    "seoDescription": "seodescription",
+    "isTopProduct": true,
+    "isNewArrival": false,
+    "isBestProduct": true,
+    "isFeatured": false,
+    "isPopular": true,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1674712780336"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1674714131127"
+      }
+    },
+    "__v": 0
+  },
+  {
+    "slug": "product_slug_6",
+    "productName": "Realme mini music3",
+    "catSlug": "electronics_slug",
+    "subCatSlug": "electronics_slug",
+    "brandSlug": "electronics_slug",
+    "price": 1000,
+    "description": "EE",
+    "status": "active",
+    "imageURL": [
+      "https://shopo-ecom.vercel.app/_next/image?url=https%3A%2F%2Fapi.websolutionus.com%2Fshopo%2Fuploads%2Fcustom-images%2Frealme-mini-music-2022-09-26-01-34-10-1954.png&w=1920&q=75"
+    ],
+    "offerPrice": 88,
+    "stock": 8,
+    "weight": 5,
+    "seoTitle": "seotitle",
+    "seoDescription": "seodescription",
+    "isTopProduct": true,
+    "isNewArrival": false,
+    "isBestProduct": true,
+    "isFeatured": false,
+    "isPopular": true,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1674712780336"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1674714131127"
+      }
+    },
+    "__v": 0
+  },
+  {
+    "slug": "product_slug_7",
+    "productName": "Sony joystick SJ pro1",
+    "catSlug": "game_slug",
+    "subCatSlug": "game_slug",
+    "brandSlug": "game_slug",
+    "price": 1000,
+    "description": "EE",
+    "status": "active",
+    "imageURL": [
+      "https://shopo-ecom.vercel.app/_next/image?url=https%3A%2F%2Fapi.websolutionus.com%2Fshopo%2Fuploads%2Fcustom-images%2Fsony-joystick-sj-pro-2022-09-27-03-39-20-9931.png&w=1920&q=75"
+    ],
+    "offerPrice": 88,
+    "stock": 8,
+    "weight": 5,
+    "seoTitle": "seotitle",
+    "seoDescription": "seodescription",
+    "isTopProduct": true,
+    "isNewArrival": false,
+    "isBestProduct": true,
+    "isFeatured": false,
+    "isPopular": true,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1674712780336"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1674714131127"
+      }
+    },
+    "__v": 0
+  },
+  {
+    "slug": "product_slug_8",
+    "productName": "Sony joystick SJ pro2",
+    "catSlug": "game_slug",
+    "subCatSlug": "game_slug",
+    "brandSlug": "game_slug",
+    "price": 1000,
+    "description": "EE",
+    "status": "active",
+    "imageURL": [
+      "https://shopo-ecom.vercel.app/_next/image?url=https%3A%2F%2Fapi.websolutionus.com%2Fshopo%2Fuploads%2Fcustom-images%2Fsony-joystick-sj-pro-2022-09-27-03-39-20-9931.png&w=1920&q=75"
+    ],
+    "offerPrice": 88,
+    "stock": 8,
+    "weight": 5,
+    "seoTitle": "seotitle",
+    "seoDescription": "seodescription",
+    "isTopProduct": true,
+    "isNewArrival": false,
+    "isBestProduct": true,
+    "isFeatured": false,
+    "isPopular": true,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1674712780336"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1674714131127"
+      }
+    },
+    "__v": 0
+  },
+  {
+    "slug": "product_slug_9",
+    "productName": "Sony joystick SJ pro3",
+    "catSlug": "game_slug",
+    "subCatSlug": "game_slug",
+    "brandSlug": "game_slug",
+    "price": 1000,
+    "description": "EE",
+    "status": "active",
+    "imageURL": [
+      "https://shopo-ecom.vercel.app/_next/image?url=https%3A%2F%2Fapi.websolutionus.com%2Fshopo%2Fuploads%2Fcustom-images%2Fsony-joystick-sj-pro-2022-09-27-03-39-20-9931.png&w=1920&q=75"
+    ],
+    "offerPrice": 88,
+    "stock": 8,
+    "weight": 5,
+    "seoTitle": "seotitle",
+    "seoDescription": "seodescription",
+    "isTopProduct": true,
+    "isNewArrival": false,
+    "isBestProduct": true,
+    "isFeatured": false,
+    "isPopular": true,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1674712780336"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1674714131127"
+      }
+    },
+    "__v": 0
+  }
+]
