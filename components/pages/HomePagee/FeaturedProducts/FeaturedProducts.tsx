@@ -64,7 +64,7 @@ const FeaturedCategory: React.FC<Props> = (props) => {
                                   onClick={() => setSlug(singlePop?.cat_slug)}
                                   className="text-sm text-qgray hober:text-qBlack border-b border-transparent hover:border-qblack hover:text-qblack capitalize cursor-pointer"
                                 >
-                                  {singlePop.cat_name}
+                                  {singlePop?.cat_name}
                                 </span>
                               </li>
                             </>

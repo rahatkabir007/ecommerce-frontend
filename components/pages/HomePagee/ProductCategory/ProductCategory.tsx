@@ -32,12 +32,12 @@ const ProductCategory: React.FC<Props> = (props) => {
                       <div className="w-full h-[120px] relative rounded bg-white flex justify-center items-center">
                         <div className="w-full h-full relative transform scale-100 group-hover:scale-110 transition duration-300 ease-in-out">
                           <span className={styles["h"]}>
-                            <img className="!min-w-[80px] !min-h-[80px] object-cover" src={item.cat_image} alt={item.cat_name} />
+                            <img className="!min-w-[80px] !min-h-[80px] object-cover" src={item?.cat_image} alt={item?.cat_name} />
                           </span>
                         </div>
                       </div>
                       <p className="text-base text-qgray text-center mt-5 group-hover:text-qgreen transition duration-300 ease-in-out">
-                        {item.cat_name}
+                        {item?.cat_name}
                       </p>
                     </Link>
                   </div>

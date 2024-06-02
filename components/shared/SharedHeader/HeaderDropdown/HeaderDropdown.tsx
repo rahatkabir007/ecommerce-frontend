@@ -88,7 +88,7 @@ const HeaderDropdown: React.FC<Props> = (props) => {
                               <div className="flex items-center space-x-6">
                                 <img className="w-[15px] h-[15px]" src={single?.cat_image} alt={single?.cat_name} />
                                 <span className="text-xs font-normal">
-                                  {single.cat_name}
+                                  {single?.cat_name}
                                 </span>
                               </div>
                               <div>
@@ -119,7 +119,7 @@ const HeaderDropdown: React.FC<Props> = (props) => {
                                       <div className=" flex justify-between items-center px-5 h-10 transition-all duration-300 ease-in-out cursor-pointer">
                                         <div>
                                           <span className="text-xs font-normal">
-                                            {s.subcat_name}
+                                            {s?.subcat_name}
                                           </span>
                                         </div>
                                       </div>
@@ -155,7 +155,7 @@ const HeaderDropdown: React.FC<Props> = (props) => {
                                 className="category"
                               >
                                 <h1 className="text-[13px] font-bold text-qblack uppercase mb-[13px]">
-                                  {data.categoriesData.cat_name}
+                                  {data?.categoriesData?.cat_name}
                                 </h1>
                                 <div className="category-items">
                                   <ul className="flex flex-col space-y-2">
