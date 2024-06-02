@@ -8,7 +8,7 @@ interface Props {}
 const about: React.FC<Props> = (props) => {
   const states = useSelector(() => controller.states);
 
-  return <Suspense fallback={<div>Loading</div>}><About /></Suspense>;
+  return <About />;
 };
 
 export default about;

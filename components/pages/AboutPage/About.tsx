@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 import { controller } from "../../../src/state/StateController";
@@ -9,14 +9,31 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import ViewMoreBtn from "../../helpers/Buttons/ViewMoreBtn";
-import { Jsondata } from "../../../src/utils/Jsondata";
+// import { Jsondata } from "../../../src/utils/Jsondata";
 import SvgIconRenderer from "../../helpers/SvgIconRenderer";
 import { SvgPaths } from "../../../src/utils/SvgPaths";
+import { EcommerceApi } from "../../../src/API/EcommerceApi";
+import { IBlog } from "../../../interfaces/models";
 
 interface Props {}
 
 const About: React.FC<Props> = (props) => {
-  const states = useSelector(() => controller.states);
+  // const states = useSelector(() => controller.states);
+
+  const slider = React.useRef(null);
+  const [blogs, setBlogs] = useState<IBlog[]>([]);
+
+  useEffect(() => {
+    const getBlogs = async () => {
+      const { res, err } = await EcommerceApi.getAllBlogs();
+      if (res.latestBlogs) {
+        setBlogs(res?.latestBlogs);
+      }
+    };
+
+    getBlogs();
+  }, []);
+
   const feedbacks = [
     {
       description:
@@ -67,7 +84,7 @@ const About: React.FC<Props> = (props) => {
         "https://shopo-ecom.vercel.app/_next/image?url=https%3A%2F%2Fapi.websolutionus.com%2Fshopo%2Fuploads%2Fcustom-images%2Fjohn-doe-20220922033955.png&w=1920&q=75",
     },
   ];
-  const slider = React.useRef(null);
+
   const settings = {
     dots: true,
     infinite: true,
@@ -106,6 +123,14 @@ const About: React.FC<Props> = (props) => {
       },
     ],
   };
+  const [hasMounted, setHasMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setHasMounted(true);
+  }, []);
+  if (!hasMounted) {
+    return null;
+  }
 
   return (
     <div className="">
@@ -115,12 +140,10 @@ const About: React.FC<Props> = (props) => {
           <div className="container-x mx-auto">
             <div className="w-full min-h-[665px] lg:flex lg:space-x-12 items-center pb-10 lg:pb-0">
               <div className="md:w-[570px] w-full md:h-[560px] h-auto rounded overflow-hidden my-5 lg:my-0 relative">
-                <span>
-                  <img
-                    src="https://shopo-ecom.vercel.app/_next/image?url=https%3A%2F%2Fapi.websolutionus.com%2Fshopo%2Fuploads%2Fcustom-images%2Fabout-us-2022-09-22-04-39-05-2348.png&w=1920&q=75"
-                    alt=""
-                  />
-                </span>
+                <img
+                  src="https://shopo-ecom.vercel.app/_next/image?url=https%3A%2F%2Fapi.websolutionus.com%2Fshopo%2Fuploads%2Fcustom-images%2Fabout-us-2022-09-22-04-39-05-2348.png&w=1920&q=75"
+                  alt=""
+                />
               </div>
               <div className="content flex-1">
                 <div className="about-content">
@@ -128,7 +151,7 @@ const About: React.FC<Props> = (props) => {
                     <h1 className="text-3xl font-semibold mb-4 ">
                       What is e-commerce business?
                     </h1>
-                    {/* <br /> */}
+
                     <p className="text-base text-[#797979] leading-8 ">
                       Lorem Ipsum is simply dummy text of the printing and
                       typesetting industry. Lorem Ipsum has been the industry's
@@ -205,93 +228,97 @@ const About: React.FC<Props> = (props) => {
           </div>
           <div className="feedback-slider-wrapper w-vw relative overflow-hidden">
             <Slider ref={slider} {...settings}>
-              {feedbacks.map((feedback, index) => (
-                <div className="item h-auto bg-primarygray sm:px-10 sm:py-9 p-2">
-                  <div className="rating flex space-x-1 items-center mb-4 ">
-                    <span>
-                      <SvgIconRenderer
-                        className={"fill-qyellow"}
-                        width={"18"}
-                        height={"17"}
-                        viewBox={"0 0 18 17"}
-                        xmlns={"http://www.w3.org/2000/svg"}
-                        path={SvgPaths.customerFeedbackRating}
-                        // pathFill={"currentColor"}
-                        pathFill={"fill-qyellow"}
-                      />
-                    </span>
-                    <span>
-                      <SvgIconRenderer
-                        className={"fill-qyellow"}
-                        width={"18"}
-                        height={"17"}
-                        viewBox={"0 0 18 17"}
-                        xmlns={"http://www.w3.org/2000/svg"}
-                        path={SvgPaths.customerFeedbackRating}
-                        // pathFill={"currentColor"}
-                        pathFill={"fill-qyellow"}
-                      />
-                    </span>
-                    <span>
-                      <SvgIconRenderer
-                        className={"fill-qyellow"}
-                        width={"18"}
-                        height={"17"}
-                        viewBox={"0 0 18 17"}
-                        xmlns={"http://www.w3.org/2000/svg"}
-                        path={SvgPaths.customerFeedbackRating}
-                        // pathFill={"currentColor"}
-                        pathFill={"fill-qyellow"}
-                      />
-                    </span>
-                    <span>
-                      <SvgIconRenderer
-                        className={"fill-qyellow"}
-                        width={"18"}
-                        height={"17"}
-                        viewBox={"0 0 18 17"}
-                        xmlns={"http://www.w3.org/2000/svg"}
-                        path={SvgPaths.customerFeedbackRating}
-                        // pathFill={"currentColor"}
-                        pathFill={"fill-qyellow"}
-                      />
-                    </span>
-                    <span>
-                      <SvgIconRenderer
-                        className={"fill-qyellow"}
-                        width={"18"}
-                        height={"17"}
-                        viewBox={"0 0 18 17"}
-                        xmlns={"http://www.w3.org/2000/svg"}
-                        path={SvgPaths.customerFeedbackRating}
-                        // pathFill={"currentColor"}
-                        pathFill={"fill-qyellow"}
-                      />
-                    </span>
-                    <div>
-                      <span className="text-[13px] text-qblack">(5)</span>
-                    </div>
-                  </div>
-                  <div className="text-[15px] text-qgray leading-[30px] line-clamp-6 mb-4">
-                    {feedback.description}
-                  </div>
-                  <div className="flex items-center space-x-2.5 mt-3">
-                    <div className="w-[50px] h-[50px] rounded-full overflow-hidden relative">
+              {feedbacks &&
+                feedbacks.map((feedback, index) => (
+                  <div
+                    key={index}
+                    className="item h-auto bg-primarygray sm:px-10 sm:py-9 p-2"
+                  >
+                    <div className="rating flex space-x-1 items-center mb-4 ">
                       <span>
-                        <img src={feedback.picture} alt="" />
+                        <SvgIconRenderer
+                          className={"fill-qyellow"}
+                          width={"18"}
+                          height={"17"}
+                          viewBox={"0 0 18 17"}
+                          xmlns={"http://www.w3.org/2000/svg"}
+                          path={SvgPaths.customerFeedbackRating}
+                          // pathFill={"currentColor"}
+                          pathFill={"fill-qyellow"}
+                        />
                       </span>
+                      <span>
+                        <SvgIconRenderer
+                          className={"fill-qyellow"}
+                          width={"18"}
+                          height={"17"}
+                          viewBox={"0 0 18 17"}
+                          xmlns={"http://www.w3.org/2000/svg"}
+                          path={SvgPaths.customerFeedbackRating}
+                          // pathFill={"currentColor"}
+                          pathFill={"fill-qyellow"}
+                        />
+                      </span>
+                      <span>
+                        <SvgIconRenderer
+                          className={"fill-qyellow"}
+                          width={"18"}
+                          height={"17"}
+                          viewBox={"0 0 18 17"}
+                          xmlns={"http://www.w3.org/2000/svg"}
+                          path={SvgPaths.customerFeedbackRating}
+                          // pathFill={"currentColor"}
+                          pathFill={"fill-qyellow"}
+                        />
+                      </span>
+                      <span>
+                        <SvgIconRenderer
+                          className={"fill-qyellow"}
+                          width={"18"}
+                          height={"17"}
+                          viewBox={"0 0 18 17"}
+                          xmlns={"http://www.w3.org/2000/svg"}
+                          path={SvgPaths.customerFeedbackRating}
+                          // pathFill={"currentColor"}
+                          pathFill={"fill-qyellow"}
+                        />
+                      </span>
+                      <span>
+                        <SvgIconRenderer
+                          className={"fill-qyellow"}
+                          width={"18"}
+                          height={"17"}
+                          viewBox={"0 0 18 17"}
+                          xmlns={"http://www.w3.org/2000/svg"}
+                          path={SvgPaths.customerFeedbackRating}
+                          // pathFill={"currentColor"}
+                          pathFill={"fill-qyellow"}
+                        />
+                      </span>
+                      <div>
+                        <span className="text-[13px] text-qblack">(5)</span>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-[18px] text-qblack font-medium">
-                        {feedback.name}
-                      </p>
-                      <p className="text-qgray text-[13px]">
-                        {feedback.designation}
-                      </p>
+                    <div className="text-[15px] text-qgray leading-[30px] line-clamp-6 mb-4">
+                      {feedback.description}
+                    </div>
+                    <div className="flex items-center space-x-2.5 mt-3">
+                      <div className="w-[50px] h-[50px] rounded-full overflow-hidden relative">
+                        <span>
+                          <img src={feedback.picture} alt="" />
+                        </span>
+                      </div>
+                      <div>
+                        <p className="text-[18px] text-qblack font-medium">
+                          {feedback.name}
+                        </p>
+                        <p className="text-qgray text-[13px]">
+                          {feedback.designation}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </Slider>
           </div>
 
@@ -303,15 +330,6 @@ const About: React.FC<Props> = (props) => {
                 type="button"
                 className="w-[48px] h-[48px] rounded-full overflow-hidden flex justify-center items-center border border-qyellow text-qyellow focus:bg-qyellow focus:text-white"
               >
-                {/* <SvgIconRenderer
-                  xmlns={"http://www.w3.org/2000/svg"}
-                  className={"h-6 w-6"}
-                  fill={"none"}
-                  viewBox={"0 0 24 24"}
-                  stroke={"currentColor"}
-                  stroke-width={"2"}
-                  path={SvgPaths.leftArrowIcon}
-                /> */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-6 w-6"
@@ -481,7 +499,7 @@ const About: React.FC<Props> = (props) => {
             </div>
             <div className="blogs-wrapper w-full">
               <div className="grid md:grid-cols-2 grid-cols-1 lg:gap-[30px] gap-5">
-                {Jsondata.blogsData.slice(0, 2).map((data, idx) => (
+                {blogs?.slice(0, 2).map((data, idx) => (
                   <div
                     key={idx}
                     data-aos="fade-up"
@@ -493,7 +511,7 @@ const About: React.FC<Props> = (props) => {
                           <img
                             alt="blog"
                             sizes="100vw"
-                            src={data.blogThum}
+                            src={data.imageURL}
                             decoding="async"
                             data-nimg="fill"
                             className="w-full h-full object-cover"
@@ -541,9 +559,9 @@ const About: React.FC<Props> = (props) => {
                             href="/blogs/blog?slug=its-official-the-iphone-14-series-is-on-its-way-rumors-turned-out-to-be-true-the-goods-the-bads"
                           >
                             <h1 className="text-[22px] text-qblack hover:text-blue-500 font-semibold line-clamp-2 mb-1 capitalizen cursor-pointer">
-                              {data?.tittle?.length > 72
-                                ? data?.tittle?.slice(0, 72) + "..."
-                                : data?.tittle}
+                              {data?.title?.length > 72
+                                ? data?.title?.slice(0, 72) + "..."
+                                : data?.title}
                             </h1>
                           </a>
                           <div className="article-area line-clamp-2">
@@ -559,13 +577,15 @@ const About: React.FC<Props> = (props) => {
                             ></p>
 
                             <p className="opacity-50">
-                              {data.desciption.length > 130
-                                ? data.desciption.slice(0, 130) + "..."
-                                : data.desciption}
+                              {data.description && data.description.length > 130
+                                ? data.description.slice(0, 130) + "..."
+                                : data.description}
                             </p>
                           </div>
                           <div className="mt-4">
-                            <ViewMoreBtn link="/blogs/blog" />
+                            <ViewMoreBtn
+                              link={`/blogs/blog?slug=${data.slug}`}
+                            />
                           </div>
                         </div>
                       </div>

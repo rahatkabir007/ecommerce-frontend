@@ -16,8 +16,8 @@ const ViewMoreBtn: React.FC<Props> = (props) => {
   return (
     <div>
       <Link href={link} rel="noopener noreferrer">
-        <div className="flex space-x-2 items-center cursor-pointer">
-          <p className="text-base font-bold text-qblack">View More</p>
+        <div className="flex gap gap-1 md:gap-2 items-center cursor-pointer text-qblack">
+          <p className="text-xs sm:text-base font-bold">View More</p>
           <span>
             <SvgIconRenderer
               xmlns={"http://www.w3.org/2000/svg"}

@@ -16,7 +16,7 @@ const SectionHeader: React.FC<Props> = (props) => {
   return (
     <div className="mb-5 w-full">
       <div className="flex justify-between items-center">
-        <h1 className="sm:text-3xl text-xl font-semibold leading-none">
+        <h1 className="sm:text-xl md:text-3xl text-md font-semibold leading-none">
           {title}
         </h1>
         <ViewMoreBtn link={link} />

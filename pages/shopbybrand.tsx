@@ -8,11 +8,7 @@ interface Props {}
 const shopbybrand: React.FC<Props> = (props) => {
   const states = useSelector(() => controller.states);
 
-  return (
-    <div>
-      <CategoryPage />
-    </div>
-  );
+  return <div>{/* <CategoryPage /> */}</div>;
 };
 
 export default shopbybrand;

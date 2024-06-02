@@ -22,14 +22,15 @@ const SellerCard: React.FC<Props> = (props) => {
     <div>
       <div
         data-aos="fade-up"
-        className="item w-full aos-init aos-animate mt-[55px]">
+        className="item w-full aos-init aos-animate mt-[15px]"
+      >
         <div
           className={`w-full sm:h-[328px] sm:p-[30px] p-5 ${Styles["bg-image"]}`}
         >
           <div className="flex sm:flex-row flex-col-reverse sm:items-center justify-between w-full h-full">
             <div className="flex flex-col justify-between h-full">
               <div className="">
-                <h1 className="text-[30px] font-semibold text-qblack">
+                <h1 className="text-[30px] font-semibold text-qblack capitalize">
                   {props.seller.shop?.shop_name}
                 </h1>
                 <div className="flex space-x-2 items-center mb-[30px]">
@@ -136,7 +137,9 @@ const SellerCard: React.FC<Props> = (props) => {
                           pathFill="black"
                         />
                       </span>
-                      <span>{props.seller?.shop?.shop_address}</span>
+                      <span className="line-clamp-1">
+                        {props.seller?.shop?.shop_address}
+                      </span>
                     </li>
                   </ul>
                 </div>

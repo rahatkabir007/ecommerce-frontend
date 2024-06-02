@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { IProduct, IWishlistProduct } from "../../../interfaces/models";
+import { IWishlistProduct } from "../../../interfaces/models";
 import { controller } from "../../../src/state/StateController";
 import { SvgPaths } from "../../../src/utils/SvgPaths";
 import SvgIconRenderer from "../../helpers/SvgIconRenderer";
@@ -9,18 +9,41 @@ import { BsHeart } from "react-icons/bs";
 import { BsHeartFill } from "react-icons/bs";
 import Link from "next/link";
 import { EcommerceApi } from "../../../src/API/EcommerceApi";
-import { CookiesHandler } from "../../../src/utils/CookiesHandler";
+import toast from "react-hot-toast";
+//@ts-ignore
+import ReactStars from "react-rating-stars-component";
+import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
+import useWindowDimensions from "../hooks/useWindowDimensions";
 interface Props {
-  // product: IProduct;
   product: IWishlistProduct;
+  grid?: boolean;
 }
 
-const user_slug = CookiesHandler.getSlug();
-
-const ProductCard: React.FC<Props> = (props) => {
-  const { product } = props;
-  // console.log(product);
+const ProductCard: React.FC<Props> = ({ product, grid = false }) => {
   const states = useSelector(() => controller.states);
+  const user_slug = useSelector(() => controller.states.user?.slug);
+
+  const [avgRating, setAvgRating] = useState(0);
+
+  const { height, width } = useWindowDimensions();
+
+  // useEffect(() => {
+  //   const getProductReviews = async () => {
+  //     let rating = 0;
+  //     const { res, err } = await EcommerceApi.getAllProductReviews(
+  //       product?.slug
+  //     );
+  //     if (res?.length !== 0) {
+  //       res.map((data) => {
+  //         rating = rating + data.rating / res.length;
+  //         setAvgRating(rating);
+  //       });
+  //     } else if (res?.length === 0) {
+  //       setAvgRating(0);
+  //     }
+  //   };
+  //   getProductReviews();
+  // }, [product.slug]);
 
   const isInWishlist = (slug: string | undefined) => {
     for (let i = 0; i < states?.wishlistData?.length; i++) {
@@ -32,6 +55,12 @@ const ProductCard: React.FC<Props> = (props) => {
   };
 
   const handleWishlist = async () => {
+    if (!user_slug) {
+      toast.error("Please login first");
+      return;
+    }
+
+    controller.setApiLoading(true);
     const newProduct = { ...product };
     //@ts-ignore
     delete newProduct._id;
@@ -42,7 +71,7 @@ const ProductCard: React.FC<Props> = (props) => {
       if (err) {
         console.log(err);
       } else {
-        console.log(res);
+        toast.success("Added To Wishlist");
         controller.setAddtoWishlist(newProduct);
       }
     } else {
@@ -52,9 +81,11 @@ const ProductCard: React.FC<Props> = (props) => {
       );
       if (err) {
       } else {
+        toast.success("Removed from Wishlist");
         controller.setRemoveWishlistSingleProduct(newProduct);
       }
     }
+    controller.setApiLoading(false);
   };
 
   const cartListProduct = states?.cartlistData.find(
@@ -63,22 +94,25 @@ const ProductCard: React.FC<Props> = (props) => {
 
   const handleCartToggle = async () => {
     if (!user_slug) {
-      alert("Please login first");
+      toast.error("Please login first");
       return;
     }
+
+    controller.setApiLoading(true);
 
     const cartProductData = {
       user_slug: user_slug,
       product_slug: product.slug,
       quantity: cartListProduct?.quantity || 1,
     };
-    
+
     if (cartListProduct) {
       const { res, err } = await EcommerceApi.deleteFromCart(
         user_slug,
         product?.slug
       );
       if (res) {
+        toast.success("Item Deleted From Cart");
         controller.setRemoveCartItem(product);
       }
     } else {
@@ -91,74 +125,47 @@ const ProductCard: React.FC<Props> = (props) => {
         };
 
         controller.setAddtoCartlist(newProduct);
+        toast.success("Added to Cart");
       } else {
         console.log(err);
-        alert("Failed");
+        toast.error("Failed");
       }
     }
+
+    controller.setApiLoading(false);
   };
 
   return (
-    <div>
+    <div
+      className={
+        grid ? "w-auto" : "w-[220px]" + " sm:w-auto flex-shrink-0 snap-start"
+      }
+    >
       <div data-aos="fade-up" className="item aos-init">
         <div className="main-wrapper-card relative">
           <div
-            className={`${styles["product-card-one"]} w-full h-[445px] bg-white relative group overflow-hidden`}
+            className={`${styles["product-card-one"]} w-full h-[270px] md:h-[445px] bg-white relative group overflow-hidden`}
             style={{
               boxShadow: "rgba(0, 0, 0, 0.05) 0px 15px 64px 0px",
             }}
           >
-            <div className="product-card-img w-full h-[300px] -mt-2">
-              <div className="w-full h-full relative flex justify-center items-center transform scale-100 group-hover:scale-110 transition duration-300 ease-in-out">
-                <span
-                  style={{
-                    boxSizing: "border-box",
-                    display: "block",
-                    overflow: "hidden",
-                    width: "initial",
-                    height: "initial",
-                    background: "none",
-                    opacity: 1,
-                    border: 0,
-                    margin: 0,
-                    padding: 0,
-                    position: "absolute",
-                    inset: 0,
-                  }}
-                >
-                  <picture>
-                    {product && product?.imageURL?.length > 0 && (
-                      <img
-                        alt=""
-                        src={product?.imageURL[0]}
-                        decoding="async"
-                        data-nimg="fill"
-                        className="w-full h-full object-contain"
-                        style={{
-                          position: "absolute",
-                          inset: 0,
-                          boxSizing: "border-box",
-                          padding: 0,
-                          border: "none",
-                          margin: "auto",
-                          display: "block",
-                          width: 0,
-                          height: 0,
-                          minWidth: "100%",
-                          maxWidth: "100%",
-                          minHeight: "100%",
-                          maxHeight: "100%",
-                          objectFit: "scale-down",
-                        }}
-                        sizes="100vw"
-                      />
-                    )}
-                  </picture>
-                </span>
+            <div className="product-card-img w-full h-[150px] md:h-[300px] -mt-2">
+              <div className="w-full h-full relative flex justify-center items-center transform scale-100 group-hover:scale-110 transition duration-300 ease-in-out mt-2">
+                <picture className="w-full h-full md:h-auto flex justify-center p-1">
+                  {product && product?.imageURL?.length > 0 && (
+                    <img
+                      alt=""
+                      src={product?.imageURL[0]}
+                      decoding="async"
+                      data-nimg="fill"
+                      className="object-contain"
+                    />
+                  )}
+                </picture>
               </div>
             </div>
-            <div className="product-card-details px-[30px] pb-[30px] relative pt-2">
-              <div className="absolute w-full h-10 px-[30px] left-0 top-40 group-hover:top-[85px] transition-all duration-300 ease-in-out">
+            <div className="product-card-details px-[12px] md:px-[30px] pb-[12px] md:pb-[30px] relative pt-2">
+              <div className="absolute w-full h-10 px-[12px] md:px-[30px] left-0 top-40 group-hover:top-[65px] md:group-hover:top-[80px] transition-all duration-300 ease-in-out">
                 <button
                   onClick={handleCartToggle}
                   type="button"
@@ -191,77 +198,59 @@ const ProductCard: React.FC<Props> = (props) => {
                   ></div>
                 </button>
               </div>
-              <div className="reviews flex space-x-[1px] mb-3">
-                <span className="text-gray-500">
-                  <SvgIconRenderer
-                    width={"18"}
-                    height={"17"}
-                    viewBox={"0 0 18 17"}
-                    fill={"none"}
-                    xmlns={"http://www.w3.org/2000/svg"}
-                    path={SvgPaths.ratingIcon}
-                    pathFill={"#D2D8E1"}
+              <div className="reviews flex space-x-[1px] mb-1 md:mb-3">
+                {product && (
+                  <ReactStars
+                    count={5}
+                    value={product?.rating}
+                    edit={false}
+                    size={width && width > 640 ? 24 : 16}
+                    isHalf={true}
+                    emptyIcon={<FaRegStar />}
+                    halfIcon={<FaStarHalfAlt />}
+                    fullIcon={<FaStar />}
+                    activeColor="#FFA800"
+                    color="#d3d3d3"
                   />
-                </span>
-                <span className="text-gray-500">
-                  <SvgIconRenderer
-                    width={"18"}
-                    height={"17"}
-                    viewBox={"0 0 18 17"}
-                    fill={"none"}
-                    xmlns={"http://www.w3.org/2000/svg"}
-                    path={SvgPaths.ratingIcon}
-                    pathFill={"#D2D8E1"}
+                )}
+                {/* {product && avgRating === 0 && (
+                  <ReactStars
+                    count={5}
+                    value={0}
+                    edit={false}
+                    size={width && width > 640 ? 24 : 16}
+                    isHalf={true}
+                    emptyIcon={<FaRegStar />}
+                    halfIcon={<FaStarHalfAlt />}
+                    fullIcon={<FaStar />}
+                    activeColor="#FFA800"
+                    color="#d3d3d3"
                   />
-                </span>
-                <span className="text-gray-500">
-                  <SvgIconRenderer
-                    width={"18"}
-                    height={"17"}
-                    viewBox={"0 0 18 17"}
-                    fill={"none"}
-                    xmlns={"http://www.w3.org/2000/svg"}
-                    path={SvgPaths.ratingIcon}
-                    pathFill={"#D2D8E1"}
-                  />
-                </span>
-                <span className="text-gray-500">
-                  <SvgIconRenderer
-                    width={"18"}
-                    height={"17"}
-                    viewBox={"0 0 18 17"}
-                    fill={"none"}
-                    xmlns={"http://www.w3.org/2000/svg"}
-                    path={SvgPaths.ratingIcon}
-                    pathFill={"#D2D8E1"}
-                  />
-                </span>
-                <span className="text-gray-500">
-                  <SvgIconRenderer
-                    width={"18"}
-                    height={"17"}
-                    viewBox={"0 0 18 17"}
-                    fill={"none"}
-                    xmlns={"http://www.w3.org/2000/svg"}
-                    path={SvgPaths.ratingIcon}
-                    pathFill={"#D2D8E1"}
-                  />
-                </span>
+                )} */}
               </div>
               <Link
                 rel="noopener noreferrer"
                 href={`/single_product?slug=${product.slug}`}
               >
-                <p className="title mb-2 text-[15px] font-semibold text-qblack leading-[24px] line-clamp-2 hover:text-blue-600 cursor-pointer">
+                <p className="title md-1 md:mb-2 text-[15px] font-semibold text-qblack leading-[24px] line-clamp-2 hover:text-blue-600 cursor-pointer capitalize">
                   {product.productName}
                 </p>
               </Link>
               <p className="price">
-                <span className="main-price  font-semibold text-[18px] line-through text-qgray">
+                <span
+                  className={` ${
+                    product.offerPrice
+                      ? "line-through text-qgray"
+                      : " text-qred"
+                  } main-price  font-semibold text-sm md:text-[18px] `}
+                >
                   <span>${product.price}</span>
                 </span>
-                <span className="offer-price text-qred font-semibold text-[18px] ml-2">
-                  <span>${product.offerPrice}</span>
+                <span className="offer-price text-qred font-semibold text-sm md:text-[18px] ml-2">
+                  <span>
+                    {product.offerPrice ? `$` : ""}
+                    {product.offerPrice ? product.offerPrice : ""}
+                  </span>
                 </span>
               </p>
             </div>
@@ -303,23 +292,6 @@ const ProductCard: React.FC<Props> = (props) => {
                   )}
                 </span>
               </button>
-
-              {/* <button
-                className="absolute group-hover:right-4 -right-10 top-[168px] transition-all duration-500 ease-in-out"
-                type="button"
-              >
-                <span className="w-10 h-10 flex justify-center text-black hover:text-white transition-all duration-300 ease-in-out items-center hover:bg-qyellow bg-primarygray rounded">
-                  <SvgIconRenderer
-                    width={"20"}
-                    height={"22"}
-                    viewBox={"0 0 20 22"}
-                    fill={"none"}
-                    xmlns={"http://www.w3.org/2000/svg"}
-                    path={SvgPaths.compare}
-                    pathFill={"black"}
-                  />
-                </span>
-              </button> */}
             </div>
           </div>
           <span className={`${styles["anim"]} ${styles["bottom"]} `}></span>

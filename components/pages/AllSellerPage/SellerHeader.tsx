@@ -6,7 +6,9 @@ import { Jsondata } from "../../../src/utils/Jsondata";
 import { SvgPaths } from "../../../src/utils/SvgPaths";
 import SvgIconRenderer from "../../helpers/SvgIconRenderer";
 import { EcommerceApi } from "../../../src/API/EcommerceApi";
-import SellerHeaderCard from "./SellerHeaderCard";
+//@ts-ignore
+import ReactStars from "react-rating-stars-component";
+import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
 
 interface Props {
   sellerData: ISeller;
@@ -35,19 +37,21 @@ const SellerHeader: React.FC<Props> = ({ sellerData }) => {
   }, [searchString, sortBy, sortType]);
 
   return (
-    <div className="w-full sm:h-[328px]  mx-auto ">
+    <div className="w-full sm:h-[328px]  mx-auto text-qblack font-normal">
       <div className="w-full">
         <div
           data-aos="fade-right"
           className="saller-info w-full mb-[40px] sm:h-[328px] sm:flex justify-between items-center px-11 overflow-hidden relative py-10 sm:py-0 aos-init aos-animate"
+          // style={{
+          //   background: `url(https://shopo-ecom.vercel.app/assets/images/saller-cover.png) 0% 0% / cover no-repeat`,
+          // }}
           style={{
-            background:
-              "url('https://shopo-ecom.vercel.app/assets/images/saller-cover.png') 0% 0% / cover no-repeat",
+            background: `url(${sellerData?.shop?.shop_cover}) 0% 0% / cover no-repeat`,
           }}
         >
-          <div className="saller-text-details w-72">
+          <div className="saller-text-details w-72  p-5 bg-white bg-opacity-80 rounded-lg">
             <ul>
-              <li className="text-black flex space-x-5 items-center leading-9 text-base font-normal">
+              <li className="flex space-x-5 items-center leading-9 text-base">
                 <span>
                   <SvgIconRenderer
                     width="16"
@@ -59,9 +63,11 @@ const SellerHeader: React.FC<Props> = ({ sellerData }) => {
                     pathFill="black"
                   />
                 </span>
-                <span>{sellerData?.email}</span>
+                <span className="line-clamp-1" title={sellerData?.email}>
+                  {sellerData?.email}
+                </span>
               </li>
-              <li className="text-black flex space-x-5 items-center leading-9 text-base font-normal">
+              <li className=" flex space-x-5 items-center leading-9 text-base ">
                 <span>
                   <SvgIconRenderer
                     width="15"
@@ -75,7 +81,7 @@ const SellerHeader: React.FC<Props> = ({ sellerData }) => {
                 </span>
                 <span>{sellerData?.phone}</span>
               </li>
-              <li className="text-black flex space-x-5 items-center leading-9 text-base font-normal">
+              <li className="flex space-x-5 items-center leading-9 text-base ">
                 <span>
                   <SvgIconRenderer
                     width="14"
@@ -87,75 +93,38 @@ const SellerHeader: React.FC<Props> = ({ sellerData }) => {
                     pathFill="black"
                   />
                 </span>
-                <span>{sellerData?.shop?.shop_address}</span>
+                <span
+                  className="line-clamp-1"
+                  title={sellerData?.shop?.shop_address}
+                >
+                  {sellerData?.shop?.shop_address}
+                </span>
               </li>
             </ul>
           </div>
-          <div className="saller-name lg:block hidden">
+
+          <div className="saller-name lg:block hidden py-5 px-9 bg-white bg-opacity-80 rounded-lg">
             <h1 className="text-[60px] font-bold">
               {sellerData?.shop?.shop_name}
             </h1>
             <div className="flex justify-center">
-              <span>
-                <SvgIconRenderer
-                  width="18"
-                  height="17"
-                  viewBox="0 0 18 17"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  path={SvgPaths.ratingIcon}
-                  pathFill="#FFA800"
-                />
-              </span>
-              <span>
-                <SvgIconRenderer
-                  width="18"
-                  height="17"
-                  viewBox="0 0 18 17"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  path={SvgPaths.ratingIcon}
-                  pathFill="#FFA800"
-                />
-              </span>
-              <span>
-                <SvgIconRenderer
-                  width="18"
-                  height="17"
-                  viewBox="0 0 18 17"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  path={SvgPaths.ratingIcon}
-                  pathFill="#FFA800"
-                />
-              </span>
-              <span>
-                <SvgIconRenderer
-                  width="18"
-                  height="17"
-                  viewBox="0 0 18 17"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  path={SvgPaths.ratingIcon}
-                  pathFill="#FFA800"
-                />
-              </span>
-              <span>
-                <SvgIconRenderer
-                  width="18"
-                  height="17"
-                  viewBox="0 0 18 17"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  path={SvgPaths.ratingIcon}
-                  pathFill="#FFA800"
-                />
-              </span>
+              <ReactStars
+                count={5}
+                value={3.5}
+                edit={false}
+                size={18}
+                isHalf={true}
+                emptyIcon={<FaRegStar />}
+                halfIcon={<FaStarHalfAlt />}
+                fullIcon={<FaStar />}
+                activeColor="rgb(255, 168, 0)"
+                color="rgb(107 114 128)"
+              />
             </div>
           </div>
-          <div className="saller-logo mt-5 sm:mt-5">
+          <div className="saller-logo mt-5 sm:mt-5 p-5 md:p-0 bg-white md:bg-none bg-opacity-80 md:bg-opacity-0 rounded-lg">
             <div className="flex sm:justify-center justify-start">
-              <div className="w-[170px] h-[170px] flex justify-center items-center rounded-full bg-white relative mb-1 overflow-hidden">
+              <div className="w-[170px] h-[170px] flex justify-center items-center rounded-full bg-white bg-opacity-80 relative mb-1 overflow-hidden">
                 <span
                   style={{
                     boxSizing: "border-box",
@@ -173,8 +142,8 @@ const SellerHeader: React.FC<Props> = ({ sellerData }) => {
                   }}
                 >
                   <img
-                    alt="loooooooooooooooooooooogoooooooooooooooo"
-                    src={sellerData?.shop?.shop_cover}
+                    alt=""
+                    src={sellerData?.shop?.shop_logo}
                     sizes="100vw"
                     decoding="async"
                     data-nimg="fill"
@@ -199,7 +168,7 @@ const SellerHeader: React.FC<Props> = ({ sellerData }) => {
                 </span>
               </div>
             </div>
-            <div className="flex sm:justify-center justify-start">
+            <div className="flex sm:justify-center justify-start md:hidden">
               <span className="text-[30px] font-medium text-center">
                 {sellerData?.shop?.shop_name}
               </span>

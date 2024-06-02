@@ -1,6 +1,5 @@
-import { useSelector } from "react-redux";
-import { controller, IStates } from "./../state/StateController";
-import { ICartProduct, IProduct } from "./../../interfaces/models";
+import { controller } from "./../state/StateController";
+import { ICartProduct } from "./../../interfaces/models";
 import { EcommerceApi } from "./../API/EcommerceApi";
 
 export const CartHandler = {
@@ -23,8 +22,10 @@ export const CartHandler = {
   },
 
   handleDeleteFromCart: async (product: ICartProduct, user_slug: string) => {
-    console.log(product);
-    const { res, err } = await EcommerceApi.deleteFromCart(user_slug, product?.slug);
+    const { res, err } = await EcommerceApi.deleteFromCart(
+      user_slug,
+      product?.slug
+    );
     if (res) {
       controller.setRemoveCartItem(product);
     }

@@ -11,48 +11,64 @@ import ProfileReviews from "./ProfileReviews/ProfileReviews";
 import ProfileWishlist from "./ProfileWishlist/ProfileWishlist";
 import { EcommerceApi } from "../../../src/API/EcommerceApi";
 import { IOrder } from "../../../interfaces/models";
-import { CookiesHandler } from "../../../src/utils/CookiesHandler";
 
 interface Props {}
 
 const ProfileDashboardRenderer: React.FC<Props> = (props) => {
-  const states = useSelector(() => controller.states);
+  const loggedInUser = useSelector(() => controller.states.user);
   const [allOrders, setAllOrders] = useState<IOrder[]>([]);
-  const [allCompletedOrders, setAllCompletedOrders] = useState<IOrder[]>([]);
+  const [allCompletedOrdersLength, setAllCompletedOrdersLength] = useState(0);
+  const [newOrdersLength, setNewOrdersLength] = useState(0);
 
   const { asPath } = useRouter();
-  const user_slug = CookiesHandler.getSlug();
+
   const hash = asPath.split("#")[1];
-  const loggedInUser = states.user;
-  
+
   useEffect(() => {
     const getAllOrders = async () => {
-      const { res, err } = await EcommerceApi.allOrders(user_slug);
-      console.log(res);
-      console.log(err);
-      if (res) {
-        setAllOrders(res.data);
-        const completedOrders = res.data.filter(
-          (dt) => dt.order_status === "completed"
-        );
-        setAllCompletedOrders(completedOrders);
+      if (loggedInUser) {
+        const { res, err } = await EcommerceApi.allOrders(loggedInUser.slug);
+        if (res) {
+          setAllOrders(res.data);
+
+          const completedOrders = res.data.filter(
+            (dt) => dt.order_status === "completed"
+          );
+          setAllCompletedOrdersLength(completedOrders.length);
+
+          const newOrders = res.data.filter((ord) => {
+            const ordDate =
+              new Date(ord.createdAt as string).getTime() +
+              2 * 24 * 60 * 60 * 1000;
+
+            const todayDate = new Date().getTime();
+
+            if (todayDate <= ordDate) {
+              return ord;
+            }
+          });
+
+          setNewOrdersLength(newOrders.length);
+        }
       }
     };
 
     getAllOrders();
-  }, []);
+  }, [loggedInUser]);
+
   switch (hash) {
     case "dashboard": {
       return (
         <ProfileDashboard
           user={loggedInUser}
-          allCompletedOrders={allCompletedOrders}
+          allCompletedOrdersLength={allCompletedOrdersLength}
+          newOrdersLength={newOrdersLength}
           allOrders={allOrders}
         />
       );
     }
     case "personal_info": {
-      return <PersonalInfo user={loggedInUser} />;
+      return <PersonalInfo />;
     }
     case "order": {
       return <ProfileOrder orders={allOrders} />;
@@ -73,7 +89,8 @@ const ProfileDashboardRenderer: React.FC<Props> = (props) => {
       return (
         <ProfileDashboard
           user={loggedInUser}
-          allCompletedOrders={allCompletedOrders}
+          allCompletedOrdersLength={allCompletedOrdersLength}
+          newOrdersLength={newOrdersLength}
           allOrders={allOrders}
         />
       );

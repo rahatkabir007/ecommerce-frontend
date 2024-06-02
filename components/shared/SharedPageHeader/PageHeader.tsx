@@ -15,7 +15,7 @@ const PageHeader: React.FC<Props> = (props) => {
   const { slug, link, title } = props;
 
   return (
-    <div className="w-full bg-[#FFFAEF] h-[173px] py-10">
+    <div className="w-full bg-[#FFFAEF] h-[173px] py-10 hidden lg:block">
       <div className="container-x mx-auto">
         <Breadcrumb slug={slug} link={link} />
         <div className="flex justify-center">

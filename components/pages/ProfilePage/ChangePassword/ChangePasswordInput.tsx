@@ -1,10 +1,11 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { useSelector } from "react-redux";
 import { controller } from "../../../../src/state/StateController";
 import { useState } from "react";
 interface Props {
   label: string;
   id: string;
+  pass: Dispatch<SetStateAction<string>>;
 }
 
 const ChangePasswordInput: React.FC<Props> = (props) => {
@@ -15,6 +16,11 @@ const ChangePasswordInput: React.FC<Props> = (props) => {
   const handlePasswordChange = (e: any) => {
     setPasswordInput(e.target.value);
   };
+
+  if (passwordInput) {
+    props.pass(passwordInput);
+  }
+
   const togglePassword = () => {
     if (passwordType === "password") {
       setPasswordType("text");
@@ -30,7 +36,7 @@ const ChangePasswordInput: React.FC<Props> = (props) => {
         htmlFor="old_password">
         {props.label}
       </label>
-      <div className="input-wrapper border border-[#E8E8E8] w-full h-[58px] overflow-hidden relative ">
+      <div className="input-wrapper border border-[#E8E8E8] w-full h-[58px] overflow-hidden relative">
         <input
           type={passwordType}
           onChange={handlePasswordChange}
@@ -39,6 +45,7 @@ const ChangePasswordInput: React.FC<Props> = (props) => {
           className="input-field placeholder:text-base text-bese px-4 text-dark-gray w-full h-full bg-[#FAFAFA] focus:ring-0 focus:outline-none"
           id={props.id}
         />
+
         <div
           onClick={togglePassword}
           className="absolute right-6 bottom-[17px] z-10 cursor-pointer">

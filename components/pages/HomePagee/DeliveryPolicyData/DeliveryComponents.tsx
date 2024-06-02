@@ -8,7 +8,7 @@ const DeliveryComponents: React.FC<Props> = (props) => {
   return (
     <div
       data-aos="fade-up"
-      className="best-services w-full bg-white flex flex-col space-y-10 lg:space-y-0 lg:flex-row lg:justify-between lg:items-center lg:h-[110px] px-10 lg:py-0 py-10 aos-init aos-animate">
+      className="best-services w-full bg-white hidden md:flex flex-col space-y-10 lg:space-y-0 lg:flex-row lg:justify-between lg:items-center lg:h-[110px] px-10 lg:py-0 py-10 aos-init aos-animate">
       <div className="item">
         <div className="flex space-x-5 items-center">
           <div>

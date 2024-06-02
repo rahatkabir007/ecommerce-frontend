@@ -7,30 +7,24 @@ import ProductCard from "../../../shared/SharedProductCard/ProductCard";
 import SectionHeader from "../SectionHeader";
 import { IFeaturedCategories } from "../../../../interfaces/models";
 import { EcommerceApi } from "../../../../src/API/EcommerceApi";
+import Link from "next/link";
+import useWindowDimensions from "../../../shared/hooks/useWindowDimensions";
+import styles from "../../../../styles/Scrollbar.module.css";
 
 interface Props {}
 
 const FeaturedCategory: React.FC<Props> = (props) => {
-  const states = useSelector(() => controller.states);
-  const [featuredCategoriesData, setFeaturedCategoriesData] = useState<
-    IFeaturedCategories[]
-  >([]);
+  const featuredCategoriesData = useSelector(
+    () => controller.states.featuredCategories
+  );
+  const allProducts = useSelector(() => controller.states.allProducts);
   const [slug, setSlug] = useState("");
 
-  useEffect(() => {
-    const fetchAllPopularCategoriesData = async () => {
-      const { res, err } = await EcommerceApi.allFeaturedCategories();
-      if (err) {
-        console.log(err);
-      } else {
-        setSlug(res[0]?.cat_slug);
-        setFeaturedCategoriesData(res);
+  const { height, width } = useWindowDimensions();
 
-        // console.log(res);
-      }
-    };
-    fetchAllPopularCategoriesData();
-  }, []);
+  useEffect(() => {
+    setSlug(featuredCategoriesData[0]?.cat_slug);
+  }, [featuredCategoriesData]);
 
   return (
     <div>
@@ -42,7 +36,13 @@ const FeaturedCategory: React.FC<Props> = (props) => {
           />
           <div className="section-content">
             <div className="products-section w-full">
-              <div className="grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 xl:gap-[30px] gap-5">
+              <div
+                className={
+                  width && width > 640
+                    ? "grid xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 xl:gap-[30px] gap-5"
+                    : `flex flex-nowrap gap-3 overflow-scroll snap-x snap-mandatory ${styles["scrollbar"]}`
+                }
+              >
                 <div className="category-card hidden xl:block w-full">
                   <div
                     className="category-card-wrappwer w-full h-[445px] p-[30px]"
@@ -69,34 +69,15 @@ const FeaturedCategory: React.FC<Props> = (props) => {
                               </li>
                             </>
                           ))}
-                          {/* <li>
-                            <span
-                              onClick={() => setSlug("mobile_slug")}
-                              className="text-sm text-qgray hober:text-qBlack border-b border-transparent hover:border-qblack hover:text-qblack capitalize cursor-pointer"
-                            >
-                              Mobile
-                            </span>
-                          </li> */}
-                          {/* <li>
-                            <span
-                              onClick={() => setSlug("electronics_slug")}
-                              className="text-sm text-qgray hober:text-qBlack border-b border-transparent hover:border-qblack hover:text-qblack capitalize cursor-pointer">
-                              Electronics
-                            </span>
-                          </li>
-                          <li>
-                            <span
-                              onClick={() => setSlug("game_slug")}
-                              className="text-sm text-qgray hober:text-qBlack border-b border-transparent hover:border-qblack hover:text-qblack capitalize cursor-pointer">
-                              Game
-                            </span>
-                          </li> */}
                         </ul>
                       </div>
                       <div className="flex space-x-2 items-center">
-                        <span className=" text-qblack font-semibold text-sm">
+                        <Link
+                          href="/products?highlight=featured_product"
+                          className=" text-qblack font-semibold text-sm"
+                        >
                           Shop Now
-                        </span>
+                        </Link>
                         <span>
                           <svg
                             width="7"
@@ -127,12 +108,14 @@ const FeaturedCategory: React.FC<Props> = (props) => {
                     </div>
                   </div>
                 </div>
-                {states.allProducts
-                  .filter((product) => product.catSlug === slug)
-                  .slice(0, 3)
-                  .map((pro) => (
-                    <ProductCard product={pro}></ProductCard>
-                  ))}
+
+                {featuredCategoriesData.length !== 0 &&
+                  allProducts.length !== 0 &&
+                  slug &&
+                  allProducts
+                    .filter((product) => product.catSlug === slug)
+                    .slice(0, 3)
+                    .map((pro) => <ProductCard product={pro}></ProductCard>)}
               </div>
             </div>
           </div>

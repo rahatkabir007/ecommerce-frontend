@@ -38,7 +38,7 @@ const BestDealBanner: React.FC<Props> = (props) => {
               <div>
                 <Link
                   rel="noopener noreferrer"
-                  href="/products?category=electronics"
+                  href="/products?category=%2Belectronics_slug_333"
                 >
                   <div className="w-[136px] h-[40px] bg-white relative flex justify-center overflow-hidden">
                     <div className="w-full h-full bg-qyellow absolute transition-all duration-300 ease-in-out -left-[140px] group-hover:left-0 top-0"></div>

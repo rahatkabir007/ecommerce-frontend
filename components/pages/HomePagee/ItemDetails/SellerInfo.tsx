@@ -1,11 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { controller } from "../../../../src/state/StateController";
-import { IUser } from "../../../../interfaces/models";
+import { ISeller, IUser } from "../../../../interfaces/models";
 import ProductCard from "../../../shared/SharedProductCard/ProductCard";
 
 interface Props {
-  seller: IUser | null;
+  seller: ISeller | null;
 }
 
 const SellerInfo: React.FC<Props> = (props) => {

@@ -2,19 +2,19 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { EcommerceApi } from "../../../src/API/EcommerceApi";
 import { controller } from "../../../src/state/StateController";
-import AD1 from "./Ads/AD1";
+import HeroSection from "./HeroSectionArea/HeroSection";
+import ProductCategory from "./ProductCategory/ProductCategory";
+import PopularCategory from "./PopularCategory/PopularCategory";
+import Campaign from "./Campaign/Campaign";
+import TopRatedSection from "./TopRatedProductsSection/TopRatedSection";
+import FeaturedProducts from "./FeaturedProducts/FeaturedProducts";
+// import AD1 from "./Ads/AD1";
 import AD2 from "./Ads/AD2";
+import NewReleasedProducts from "./NewReleasedProducts/NewReleasedProducts";
 import AD3 from "./Ads/AD3";
 import BestProducts from "./BestProducts/BestProducts";
-import BestSeller from "./BestSeller/BestSeller";
-import Campaign from "./Campaign/Campaign";
-import FeaturedProducts from "./FeaturedProducts/FeaturedProducts";
-import HeroSection from "./HeroSectionArea/HeroSection";
-import NewReleasedProducts from "./NewReleasedProducts/NewReleasedProducts";
-import PopularCategory from "./PopularCategory/PopularCategory";
-import ProductCategory from "./ProductCategory/ProductCategory";
-import ShopByBrand from "./ShopByBrandSection/ShopByBrand";
-import TopRatedSection from "./TopRatedProductsSection/TopRatedSection";
+// import BestSeller from "./BestSeller/BestSeller";
+// import ShopByBrand from "./ShopByBrandSection/ShopByBrand";
 
 interface Props {}
 
@@ -35,16 +35,35 @@ const Homepage: React.FC<Props> = (props) => {
     }
   };
 
+  const fetchHomePageData = async () => {
+    const { res, err } = await EcommerceApi.getHomePageData();
+    if (err) {
+      // enqueueSnackbar('Server Error', { variant: 'error', autoHideDuration: 2000 });
+    } else {
+      controller.setHomePageData(
+        res.sliders,
+        res.sliderOne,
+        res.sliderTwo,
+        res.popularCategories,
+        res.flashSale,
+        res.featuredCategories,
+        res.adOne,
+        res.adTwo
+      );
+    }
+  };
+
   useEffect(() => {
-    fetchAllProducts();
+    Promise.all([fetchHomePageData(), fetchAllProducts()]);
   }, []);
 
   return (
-    <div className="md:p-0 p-2">
+    <div className="md:p-0">
       <HeroSection />
       <ProductCategory />
       <PopularCategory />
       {/* <ShopByBrand /> */}
+      {/* {saleData=saleData} */}
       <Campaign />
       <TopRatedSection />
       {/* <BestSeller /> */}

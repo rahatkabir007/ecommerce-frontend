@@ -9,7 +9,6 @@ interface Props {
 
 const BlogCommentCard: React.FC<Props> = ({ blogComment }) => {
   const states = useSelector(() => controller.states);
-  console.log(blogComment);
 
   return (
     <div className="comment-item bg-white px-10 py-[32px] mb-2.5">

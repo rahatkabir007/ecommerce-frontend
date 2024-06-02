@@ -14,7 +14,6 @@ const FaqRight: React.FC<Props> = (props) => {
     message: "",
   });
   let form = useRef<any>();
-  console.log(form);
 
   const sendEmail = (e: any) => {
     e.preventDefault();

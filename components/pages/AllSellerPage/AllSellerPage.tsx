@@ -30,13 +30,13 @@ const AllSellerPage: React.FC<Props> = (props) => {
     fetchAllSeller();
   }, [searchString, sortBy, sortType]);
 
-  console.log(sellersData);
-
   return (
-    <div className="w-full min-h-screen  pt-0 pb-0 mb-[60px]">
-      <PageHeader slug="All Seller" link="/allseller" title="All Seller" />
-      <div className="container-x mx-auto w-full mt-[60px]">
-        <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-[30px] gap-5">
+    <div className="w-full min-h-screen  pt-0 pb-0 ">
+      <div>
+        <PageHeader slug="All Seller" link="/allseller" title="All Seller" />
+      </div>
+      <div className="container-x mx-auto w-full mt-[40px] mb-[60px]">
+        <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-[20px] gap-5">
           {sellersData.map((seller, index) => (
             <SellerCard key={index} seller={seller}></SellerCard>
           ))}

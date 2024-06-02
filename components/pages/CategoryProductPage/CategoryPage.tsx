@@ -5,11 +5,15 @@ import CategoryItemsRight from "../CategorizedItem/CategoryItemsRight";
 import FilterWidget from "./FilterWidget";
 import FilterAd from "./FilterAd";
 import { EcommerceApi } from "../../../src/API/EcommerceApi";
+import { IProduct } from "../../../interfaces/models";
 
-interface Props {}
+interface Props {
+  filteredProducts: IProduct[];
+  count: number;
+}
 
-const CategoryPage: React.FC<Props> = (props) => {
-  const states = useSelector(() => controller.states);
+const CategoryPage: React.FC<Props> = ({ filteredProducts, count }) => {
+  // const states = useSelector(() => controller.states);
 
   const [showFilterWidget, setShowFilterWidget] = useState(false);
   const [value, setValue] = useState({
@@ -17,59 +21,29 @@ const CategoryPage: React.FC<Props> = (props) => {
     max: 15000,
   });
 
-  // const router = useRouter();
-
-  // const { search, category } = router.query;
-
-  // if(search) {
-  //   controller.setSearchString(search as string);
-  // }
-
-  // if (category && states.categories) {
-  //   const queryCat = states.categories.find(cat => cat.cat_name === category);
-  //   controller.setSearchCategory(queryCat?.cat_slug as string, true);
-  // }
-
-  useEffect(() => {
-    const handleFilteredProducts = async () => {
-      const { res, err } = await EcommerceApi.getFilteredProducts(
-        states.searchString,
-        states.searchCategory,
-        states.searchSubCategory,
-        states.searchBrand,
-        states.searchHighlight, //isPopular
-        value.min,
-        value.max
-      );
-
-      if (res) {
-        controller.setFilteredProducts(res);
-      }
-    };
-
-    handleFilteredProducts();
-  }, [
-    states.searchString,
-    states.searchCategory,
-    states.searchSubCategory,
-    states.searchBrand,
-    states.searchHighlight,
-    value,
-  ]);
+  const [skip, setSkip] = useState(0);
+  const [limit, setLimit] = useState(9);
 
   return (
-    <div className="container-x mx-auto px-2">
+    <div className="container-x mx-auto ">
       <div className="lg:flex lg:gap-x-[30px]">
-        <div className="lg:w-[270px] my-10">
+        <div className="">
           <FilterWidget
             showFilterWidget={showFilterWidget}
             setShowFilterWidget={setShowFilterWidget}
+            value={value}
             setValue={setValue}
           />
           <FilterAd />
         </div>
-        <div className="flex-1 min-h-screen my-10">
-          <CategoryItemsRight setShowFilterWidget={setShowFilterWidget} />
+        <div className="flex-1 min-h-screen my-2 md:my-10">
+          <CategoryItemsRight
+            filteredProducts={filteredProducts}
+            count={count}
+            setShowFilterWidget={setShowFilterWidget}
+            skip={skip}
+            limit={limit}
+          />
         </div>
       </div>
     </div>

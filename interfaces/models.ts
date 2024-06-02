@@ -17,6 +17,8 @@ export interface IUser {
   createdAt?: string;
   updatedAt: string;
   phone?: string;
+  // status?: "active" | "inactive";
+  status?: string;
   address: {
     country?: string;
     state?: string;
@@ -74,6 +76,7 @@ export interface IProduct {
   isFeatured?: boolean;
   isPopular?: boolean;
   seller_slug?: string;
+  rating: number;
 }
 
 export interface ISeller extends IUser {
@@ -83,8 +86,7 @@ export interface ISeller extends IUser {
   shopaddress?: string;
   logoUrl?: string;
   coverUrl?: string;
-  status?: string;
-  user_email: string;
+  user_email?: string;
   shop?: IShop;
   sellerProducts?: IProduct[];
 }
@@ -100,8 +102,8 @@ export interface IWishlistProduct extends IProduct {
 
 export interface IOrder {
   subTotal: number;
-  discount: number;
-  shippingCost: number;
+  discount?: number;
+  shippingCost?: number;
   total: number;
   slug?: string;
   createdAt?: string;
@@ -109,7 +111,7 @@ export interface IOrder {
   payment_method: string;
   user_slug: string | undefined;
   user_email: string | undefined;
-  // transaction_id: string;
+  transaction_id?: string;
   payment_status?: string;
   order_status?: string;
   address: {
@@ -179,8 +181,11 @@ export interface IAddress {
   email: string;
   phone: string;
   country: string;
-  state: string;
-  city: string;
+  division: string;
+  // state: string;
+  district: string;
+  // city: string;
+  thana: string;
   address: string;
   slug: string;
   user_slug: string;
@@ -210,12 +215,8 @@ export interface IAd {
 }
 
 export interface IMegaCategory {
-  slug?: string;
-  cat_name?: string;
-  cat_slug?: string;
-  serial: number;
-  sub_cat_list: object[];
-  status: "active" | "inactive";
+  sub_cat_list: Array<ISubCategories>;
+  categoriesData: ICategories;
 }
 
 export interface IPopularCategories {
@@ -223,8 +224,9 @@ export interface IPopularCategories {
   cat_slug: string;
   // subcat_name: string;
   // subcat_status: string;
-  cat_name: string;
+  // cat_name: string;
   cat_image: string;
+  categoriesData: ICategories;
 }
 
 export interface IFeaturedCategories {
@@ -248,6 +250,7 @@ export interface IBlog {
   title: string;
   category?: string;
   description?: string;
+  long_description?: string;
 
   isShowHomepage?: string;
   status?: string;
@@ -280,4 +283,13 @@ export interface IBlogComment {
   avatar: string;
   comment: string;
   status: string;
+}
+export interface IFlashSale {
+  name?: string;
+  title: string;
+  offer: string;
+  time: string;
+  status: string;
+  imageHome: Array<string>;
+  imageFlash: Array<string>;
 }

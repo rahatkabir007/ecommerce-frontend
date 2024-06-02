@@ -16,7 +16,7 @@ const BestProductCard: React.FC<Props> = (props) => {
   } = props;
 
   return (
-    <div className="h-[105px] bg-white border border-gray-100 px-5">
+    <div className="h-[85px] md:h-[105px] bg-white border border-gray-100 px-5">
       <div className="flex gap-x-5 h-full items-center">
         <picture>
           {
@@ -26,15 +26,15 @@ const BestProductCard: React.FC<Props> = (props) => {
 
         <div className="flex-1 flex flex-col justify-center h-full">
           <Link
-            className="mb-2 sm:text-[15px] text-[13px] font-semibold leading-[24px] line-clamp-1 hover:text-blue-600 cursor-pointer"
+            className="mb-1 md:mb-2 sm:text-[15px] text-[13px] font-semibold leading-[24px] line-clamp-1 hover:text-blue-600 cursor-pointer capitalize"
             href={"/single_product?slug=" + product.slug}
             title={product.productName}
           >
             {product.productName}
           </Link>
           <div>
-            <span className="font-semibold text-lg line-through text-gray-400">${product.price}</span>
-            <span className="font-semibold text-lg ml-2 text-red-600">${product.offerPrice}.00</span>
+            <span className="font-semibold text-sm md:text-[18px] line-through text-gray-400">${product.price}</span>
+            <span className="font-semibold text-sm md:text-[18px] ml-2 text-red-600">${product.offerPrice}.00</span>
           </div>
         </div>
       </div>

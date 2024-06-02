@@ -19,6 +19,8 @@ import {
   IBlogCategory,
   ISubscriber,
   IBlogComment,
+  IFlashSale,
+  IWishlistProduct,
 } from "./models";
 import { MyFetchInterface } from "./MyFetchInterface";
 import { IAddress } from "./models";
@@ -38,11 +40,15 @@ export interface ILoginResponse extends MyFetchInterface {
 }
 
 export interface IFilteredProductResponse extends MyFetchInterface {
+  res: { filteredProducts: IProduct[]; count: number };
+}
+
+export interface IRelatedProductResponse extends MyFetchInterface {
   res: IProduct[];
 }
 
 export interface IFilteredProductBySellerResponse extends MyFetchInterface {
-  res: { sellerData: ISeller; filteredProducts: IProduct[] };
+  res: { sellerData: ISeller; filteredProducts: IProduct[]; count: number };
 }
 
 export interface IProductResponse extends MyFetchInterface {
@@ -53,6 +59,8 @@ export interface IProductResponse extends MyFetchInterface {
     bestProducts: Array<IProduct>;
     newProducts: Array<IProduct>;
     allProductData: Array<IProduct>;
+    // relatedProductData: Array<IProduct>;
+    // relatedProductData: Array<IProduct>;
   };
 }
 export interface IWishlistResponse extends MyFetchInterface {
@@ -190,4 +198,44 @@ export interface IUserResponse extends MyFetchInterface {
 
 export interface IGetAllSellerResponse extends MyFetchInterface {
   res: ISeller[];
+}
+
+export interface IFlashSaleResponse extends MyFetchInterface {
+  res: IFlashSale;
+}
+
+export interface IGetSingleUserResponse extends MyFetchInterface {
+  res: IUser;
+}
+
+export interface IDataWoUserResponse extends MyFetchInterface {
+  res: {
+    categories: ICategories[];
+    brands: IBrands[];
+    subCategories: ISubCategories[];
+  };
+}
+
+export interface IDataWithUserResponse extends MyFetchInterface {
+  res: {
+    categories: ICategories[];
+    brands: IBrands[];
+    subCategories: ISubCategories[];
+    user: IUser;
+    cart: ICartProduct[];
+    wishlist: IWishlistProduct[];
+  };
+}
+
+export interface IHomePageDataResponse extends MyFetchInterface {
+  res: {
+    sliders: ISlider[];
+    sliderOne: IAd;
+    sliderTwo: IAd;
+    popularCategories: IPopularCategories[];
+    flashSale: IFlashSale;
+    featuredCategories: IFeaturedCategories[];
+    adOne: IAd;
+    adTwo: IAd;
+  };
 }

@@ -5,7 +5,7 @@ import Select from "react-select";
 import { EcommerceApi } from "../../../src/API/EcommerceApi";
 import { useRouter } from "next/router";
 import { CookiesHandler } from "../../../src/utils/CookiesHandler";
-
+import toast from "react-hot-toast";
 interface Props {
   selectedOption: any;
   setSelectedOption: any;
@@ -25,6 +25,17 @@ const SharedAddNewAddress: React.FC<Props> = (props) => {
   const router = useRouter();
   // const [form, setForm] = useState(false);
   // const [selectedOption, setSelectedOption] = useState(null);
+  // ----------
+  const [division, setDivision] = useState<string>("");
+
+  const [district, setDistrict] = useState<string>("");
+
+  const [thana, setThana] = useState<string>("");
+
+  const [districts, setDistricts] = useState<any>([]);
+
+  const [thanas, setThanas] = useState<string[]>([]);
+  // ----------
   const {
     selectedOption,
     setSelectedOption,
@@ -36,6 +47,7 @@ const SharedAddNewAddress: React.FC<Props> = (props) => {
   } = props;
 
   const handleSubmit = async (e: any) => {
+    controller.setApiLoading(true);
     if (user_slug) {
       e.preventDefault();
 
@@ -44,11 +56,13 @@ const SharedAddNewAddress: React.FC<Props> = (props) => {
         email: e.target.email.value,
         phone: e.target.phone.value,
         country: e.target.country.value,
-        state: e.target.state.value,
-        city: e.target.city.value,
+        division: division,
+        district: district,
+        thana: thana,
         address: e.target.address.value,
         user_slug: user_slug,
       };
+      
       const { res, err } = await EcommerceApi.updateAddress(
         addresses,
         singleAddressData?.slug
@@ -56,11 +70,13 @@ const SharedAddNewAddress: React.FC<Props> = (props) => {
       setRefresh(!refresh);
       if (res) {
         setForm(false);
+        toast.success("Successfullt updated !");
       }
       e.target.reset();
     } else {
-      alert("Please Login First");
+      toast.error("Please Login First");
     }
+    controller.setApiLoading(false);
   };
 
   const style = {
@@ -83,46 +99,220 @@ const SharedAddNewAddress: React.FC<Props> = (props) => {
     }),
   };
 
-  const countryOptions = [
-    { value: "bangladesh", label: "Bangladesh" },
-    { value: "india", label: "India" },
-    { value: "qatar", label: "Qatar" },
+  // -------
+  const wholeAddress: any = [
+    {
+      divisionName: "Dhaka division",
+      district: [
+        {
+          districtName: "Dhaka ",
+          thanas: [
+            "Adabar Thana",
+            "Badda Thana",
+            "Bangsal Thana",
+            "Bimanbandar Thana ",
+            "Cantonment Thana",
+            "Chowkbazar Thana",
+            "Darus Salam Thana",
+            "Demra Thana",
+            "Dhakshinkhan Thana",
+            "Dhamrai Upazila",
+            "Dhanmondi Thana",
+            "Dohar Upazila",
+            "Gendaria Thana",
+            "Gulshan Thana",
+            "Hazaribagh Thana",
+            "Jatrabari Thana",
+            "Kadamtali Thana",
+            "Kafrul Thana",
+            "Kalabagan",
+            "Kamrangirchar Thana",
+            "Keraniganj Upazila",
+            "Khilgaon Thana",
+            "Khilkhet Thana",
+            "Kotwali Thana (Dhaka)",
+            "Lalbagh Thana",
+            "Mirpur Model Thana",
+            "Mohammadpur Thana",
+            "Motijheel Thana",
+            "Nawabganj Upazila",
+            "New Market Thana",
+            "Pallabi Thana",
+            "Paltan",
+            "Panthapath",
+            "Ramna Thana",
+            "Rampura Thana",
+            "Sabujbagh Thana",
+            "Savar Upazila",
+            "Shah Ali Thana",
+            "Shahbag",
+            "Sher-e-Bangla Nagar",
+            "Shyampur Thana",
+            "Sutrapur Thana",
+            "Tejgaon Industrial Area Thana",
+            "Tejgaon Thana",
+            "Turag Thana",
+            "Uttar Khan Thana",
+            "Vatara Thana",
+            "Wari Thana",
+          ],
+        },
+        {
+          districtName: "Faridpur",
+          thanas: [
+            "Alfadanga Upazila",
+            "Bhanga Upazila",
+            "Boalmari Upazila",
+            "Charbhadrasan Upazila",
+            "Faridpur Sadar Upazila",
+            "Madhukhali Upazila",
+            "Nagarkanda Upazila",
+            "Sadarpur Upazila",
+            "Saltha Upazila",
+          ],
+        },
+        {
+          districtName: "Gazipur",
+          thanas: [
+            "Gazipur Sadar Upazila",
+            "Kaliakair Upazila",
+            "Kaliganj Upazila",
+            "Kapasia Upazila",
+            "Sreepur Upazila",
+          ],
+        },
+      ],
+    },
+    {
+      divisionName: "Chattogram division",
+      district: [
+        {
+          districtName: "Chattogram",
+          thanas: [
+            "Akbarshah Thana",
+            "Bakoliya Thanaa ",
+            " Bandar Thana",
+            "Bayazid Thana",
+            "Bhujpur Thana",
+            "Chandgaon Thana",
+            "Double Mooring Thana",
+            "EPZ Thana",
+            "Halishahar Thana",
+            "Karnaphuli Upazila",
+            "Khulshi Thana",
+            "Kotwali Thana (Chittagong)",
+            "Pahartali Thana",
+            "Panchlaish Thana",
+            "Patenga Thana",
+          ],
+        },
+        {
+          districtName: "Cox's bazar",
+          thanas: [
+            " Chakaria Upazila",
+            "Cox's Bazar Sadar ",
+            "Eidgaon Upazila",
+            "Jaliadwip Upazila",
+            "Kutubdia Upazila",
+            "Moheshkhali Upazila",
+            "Pekua Upazila",
+            "Ramu Upazila",
+            "Teknaf Upazila",
+            "Ukhia Upazila",
+          ],
+        },
+        {
+          districtName: "Cumilla",
+          thanas: [
+            "Barura Upazila",
+            "Brahmanpara Upazila",
+            "Burichang Upazila",
+            "Chandina Upazila",
+            "Chapitala Union Parishad",
+            "Chauddagram Upazila",
+            "Comilla Adarsha Sadar Upazila",
+            "Comilla Sadar Dakshin Upazila",
+            "Daudkandi Upazila",
+            "Debidwar Upazila",
+            "Homna Upazila",
+            "Laksam Upazila",
+            "Lalmai Upazila",
+            "Meghna Upazila",
+            "Monohorgonj Upazila",
+            "Muradnagar Upazila",
+            "Nangalkot Upazila",
+            "Titas Upazila",
+          ],
+        },
+      ],
+    },
   ];
-  const stateOptions = [
-    { value: "Dhaka", label: "Dhaka" },
-    { value: "Delhi", label: "Delhi" },
-    { value: "Dubai", label: "Dubai" },
-  ];
-  const cityOptions = [
-    { value: "Bashundhora", label: "Bashundhora" },
-    { value: "Calcutta", label: "Calcutta" },
-    { value: "Palm", label: "Palm" },
-  ];
-  const handleChange = (selectedOption: any) => {
-    setSelectedOption(selectedOption);
+  // -------
+
+  const changeDivision = (event: any) => {
+    event.preventDefault();
+    setDivision(event.target.value);
+    setDistricts(
+      wholeAddress.find((divi: any) => divi.divisionName === event.target.value)
+        .district
+    );
+    setThanas([]);
   };
+
+  const changeDistrict = (event: any) => {
+    event.preventDefault();
+    setDistrict(event.target.value);
+    setThanas(
+      districts.find((dis: any) => dis.districtName === event.target.value)
+        .thanas
+    );
+  };
+
+  const changeThana = (event: any) => {
+    event.preventDefault();
+    setThana(event.target.value);
+  };
+
+  // -----
+
+  // const countryOptions = [
+  //   { value: "bangladesh", label: "Bangladesh" },
+  //   // { value: "india", label: "India" },
+  //   // { value: "qatar", label: "Qatar" },
+  // ];
+  // const districtOptions = [
+  //   { value: "Chattogram", label: "Chattogram" },
+  //   // { value: "Delhi", label: "Delhi" },
+  //   // { value: "Dubai", label: "Dubai" },
+  // ];
+  // const upazilaOptions = [
+  //   { value: " Karnaphuli", label: " Karnaphuli" },
+  //   { value: "Lohagara", label: "Lohagara" },
+  //   { value: "Palm", label: "Palm" },
+  // ];
+
+  // const handleChange = (selectedOption: any) => {
+  //   setSelectedOption(selectedOption);
+  // };
 
   return (
     <div data-aos="zoom-in" className="w-full aos-init aos-animate">
       <div className="flex justify-between items-center">
         <h1 className="sm:text-2xl text-xl text-qblack font-medium mb-5">
-          Add New Address
+          Add New Shipping Address
         </h1>
         <span
           onClick={() => setForm(false)}
-          className="text-qyellow cursor-pointer"
-        >
+          className="text-qyellow cursor-pointer">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-5 w-5"
             viewBox="0 0 20 20"
-            fill="currentColor"
-          >
+            fill="currentColor">
             <path
-              fill-rule="evenodd"
+              fillRule="evenodd"
               d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
-              clip-rule="evenodd"
-            ></path>
+              clipRule="evenodd"></path>
           </svg>
         </span>
       </div>
@@ -180,25 +370,92 @@ const SharedAddNewAddress: React.FC<Props> = (props) => {
           </div>
           <div className="mb-6">
             <h1 className="input-label capitalize block mb-2 text-qgray text-[13px] font-normal">
-              Country*
+              Country *
             </h1>
             <div className="w-full h-[50px]  flex justify-between items-center rounded border-[#CBECD9] mb-2 ">
               <div className="my-select-box w-full">
                 <div className="my-select-box-section ">
-                  <Select
+                  {/* <Select
                     defaultValue={{
                       label: singleAddressData?.country,
                       value: singleAddressData?.country,
                     }}
                     name="country"
                     value={selectedOption}
+                    // value="Bangladesh"
                     onChange={handleChange}
                     options={countryOptions}
                     styles={style}
                     components={{
                       IndicatorSeparator: () => null,
                     }}
-                  />
+                  /> */}
+                  <select
+                    name="country"
+                    style={{
+                      padding: "11px",
+                      border: "1px solid rgb(239 239 239)",
+                      width: "100%",
+                      height: "50px",
+                      margin: "0",
+                      paddingLeft: "12px",
+                      paddingRight: "12px",
+                      fontSize: "15px",
+                      borderRadius: 0,
+                      boxShadow: "none",
+                      cursor: "pointer",
+                    }}>
+                    <option value="Bangladesh">Bangladesh</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="mb-6">
+            <h1 className="input-label capitalize block mb-2 text-qgray text-[13px] font-normal">
+              Division *
+            </h1>
+            <div className="w-full h-[50px]  flex justify-between items-center rounded border-[#CBECD9] mb-2 ">
+              <div className="my-select-box w-full">
+                <div className="my-select-box-section ">
+                  {/* <Select
+                    defaultValue={{
+                      label: singleAddressData?.country,
+                      value: singleAddressData?.country,
+                    }}
+                    name="country"
+                    value={selectedOption}
+                    // value="Bangladesh"
+                    onChange={handleChange}
+                    options={countryOptions}
+                    styles={style}
+                    components={{
+                      IndicatorSeparator: () => null,
+                    }}
+                  /> */}
+                  <select
+                    value={division}
+                    onChange={changeDivision}
+                    style={{
+                      padding: "11px",
+                      border: "1px solid rgb(239 239 239)",
+                      width: "100%",
+                      height: "50px",
+                      margin: "0",
+                      paddingLeft: "12px",
+                      paddingRight: "12px",
+                      fontSize: "15px",
+                      borderRadius: 0,
+                      boxShadow: "none",
+                      cursor: "pointer",
+                    }}>
+                    <option>Select divisions</option>
+                    {wholeAddress.map((divi: any, i: any) => (
+                      <option key={i} value={divi.divisionName}>
+                        {divi.divisionName}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
             </div>
@@ -206,46 +463,90 @@ const SharedAddNewAddress: React.FC<Props> = (props) => {
           <div className="flex space-x-5 items-center mb-6">
             <div className="w-1/2">
               <h1 className="input-label capitalize block mb-2 text-qgray text-[13px] font-normal">
-                State*
+                District*
               </h1>
               <div className="w-full h-[50px] flex justify-between items-center rounded border-[#CBECD9] mb-2 ">
                 <div className="my-select-box w-full">
                   <div className="my-select-box-section ">
-                    <Select
+                    {/* <Select
                       defaultValue={{
                         label: singleAddressData?.state,
                         value: singleAddressData?.state,
                       }}
                       name="state"
-                      options={stateOptions}
+                      options={districtOptions}
                       styles={style}
                       components={{
                         IndicatorSeparator: () => null,
-                      }}
-                    ></Select>
+                      }}></Select> */}
+                    <select
+                      value={district}
+                      onChange={changeDistrict}
+                      style={{
+                        padding: "11px",
+                        border: "1px solid rgb(239 239 239)",
+                        width: "100%",
+                        height: "50px",
+                        margin: "0",
+                        paddingLeft: "12px",
+                        paddingRight: "12px",
+                        fontSize: "15px",
+                        borderRadius: 0,
+                        boxShadow: "none",
+                        cursor: "pointer",
+                      }}>
+                      <option>Select District</option>
+                      {districts.map((dis: any, i: any) => (
+                        <option key={i} value={dis.districtName}>
+                          {dis.districtName}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
               </div>
             </div>
             <div className="w-1/2">
               <h1 className="input-label capitalize block mb-2 text-qgray text-[13px] font-normal">
-                City*
+                Thana / Upazila*
               </h1>
               <div className="w-full h-[50px] flex justify-between items-center rounded border-[#CBECD9] mb-2 ">
                 <div className="my-select-box w-full">
                   <div className="my-select-box-section ">
-                    <Select
+                    {/* <Select
                       defaultValue={{
                         label: singleAddressData?.city,
                         value: singleAddressData?.city,
                       }}
                       name="city"
-                      options={cityOptions}
+                      options={upazilaOptions}
                       styles={style}
                       components={{
                         IndicatorSeparator: () => null,
-                      }}
-                    ></Select>
+                      }}></Select> */}
+                    <select
+                      value={thana}
+                      onChange={changeThana}
+                      style={{
+                        padding: "11px",
+                        border: "1px solid rgb(239 239 239)",
+                        width: "100%",
+                        height: "50px",
+                        margin: "0",
+                        paddingLeft: "12px",
+                        paddingRight: "12px",
+                        fontSize: "15px",
+                        borderRadius: 0,
+                        boxShadow: "none",
+                        cursor: "pointer",
+                      }}>
+                      <option>Select Thana</option>
+                      {thanas.map((thana: string, i: any) => (
+                        <option key={i} value={thana}>
+                          {thana}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
               </div>
@@ -275,8 +576,7 @@ const SharedAddNewAddress: React.FC<Props> = (props) => {
               </div>
               <label
                 htmlFor="home"
-                className="text-qblack text-[15px] select-none capitalize"
-              >
+                className="text-qblack text-[15px] select-none capitalize">
                 home
               </label>
             </div>
@@ -286,8 +586,7 @@ const SharedAddNewAddress: React.FC<Props> = (props) => {
               </div>
               <label
                 htmlFor="office"
-                className="text-qblack text-[15px] select-none"
-              >
+                className="text-qblack text-[15px] select-none">
                 Office
               </label>
             </div>

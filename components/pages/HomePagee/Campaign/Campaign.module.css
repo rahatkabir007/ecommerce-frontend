@@ -1,11 +1,11 @@
 .campaign-countdown {
-    background: url("https://api.websolutionus.com/shopo/uploads/website-images/flash_sale--2022-09-25-04-09-21-6554.png");
-    background-repeat: no-repeat;
-    background-size: cover;
+  /* background: url("https://api.websolutionus.com/shopo/uploads/website-images/flash_sale--2022-09-25-04-09-21-6554.png"); */
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .download-app {
-    background: url("https://api.websolutionus.com/shopo/uploads/website-images/Mega-menu-2022-09-20-10-59-27-3427.png");
-    background-repeat: no-repeat;
-    background-size: cover;
+  background: url("https://api.websolutionus.com/shopo/uploads/website-images/Mega-menu-2022-09-20-10-59-27-3427.png");
+  background-repeat: no-repeat;
+  background-size: cover;
 }

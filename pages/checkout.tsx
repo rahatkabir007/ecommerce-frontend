@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import CheckoutPage from "../components/pages/CheckoutPage/CheckoutPage";
 import { controller } from "../src/state/StateController";
+import withBuyerPrivate from "../components/hocs/withBuyerPrivate";
 
 interface Props {}
 
@@ -15,4 +16,4 @@ const checkout: React.FC<Props> = (props) => {
   );
 };
 
-export default checkout;
+export default withBuyerPrivate(checkout);

@@ -14,21 +14,22 @@ const ProfileReviews: React.FC<Props> = (props) => {
 
   const [reviewDatas, setReviewDatas] = useState<IReview[]>([]);
 
-  const user_slug = CookiesHandler.getSlug();
+  const user_slug = states.user?.slug;
 
   const getAllReviews = async () => {
-    const { res, err } = await EcommerceApi.getAllReviews(user_slug);
-    if (res) {
-      console.log("res from get-all-reviews =", res);
-      setReviewDatas(res);
-    } else {
-      console.log(" reviews=", err);
+    if (user_slug) {
+      const { res, err } = await EcommerceApi.getAllReviews(user_slug);
+      if (res) {
+        setReviewDatas(res);
+      } else {
+        console.log(err);
+      }
     }
   };
 
   useEffect(() => {
     getAllReviews();
-  }, []);
+  }, [user_slug]);
 
   if (reviewDatas.length === 0) {
     return (
@@ -50,9 +51,9 @@ const ProfileReviews: React.FC<Props> = (props) => {
         </div>
         <div className="flex justify-center items-center">
           <Link href="/">
-            <div className="w-[180px] h-[50px] ">
+            <span className="w-[180px] h-[50px] ">
               <button className="yellow-btn ">Back to Shop</button>
-            </div>
+            </span>
           </Link>
         </div>
       </div>
@@ -60,7 +61,7 @@ const ProfileReviews: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className="grid md:grid-cols-2 grid-cols-1 gap-8">
+    <div className="grid md:grid-cols-2 grid-cols-1 gap-2 md:gap-8">
       {reviewDatas.map((review, idx) => (
         <ProfileReviewItem review={review} />
       ))}

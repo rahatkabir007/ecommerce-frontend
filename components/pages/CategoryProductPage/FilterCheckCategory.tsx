@@ -1,17 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { ICategories } from "../../../interfaces/models";
 import { controller } from "../../../src/state/StateController";
+import { useRouter } from "next/router";
 
 interface Props {
   category: ICategories;
-  // handleCategorySelect: Function;
 }
 
 const FilterCheckCategory: React.FC<Props> = (props) => {
+  const {
+    category: { cat_slug, cat_name },
+  } = props;
   const states = useSelector(() => controller.states);
+  const router = useRouter();
+  const [checked, setChecked] = useState(false);
 
-  const { category: { cat_slug, cat_name} } = props;
+  useEffect(() => {
+    if (router.query.category) {
+      setChecked(router.query.category?.includes(cat_slug));
+    } else {
+      setChecked(false);
+    }
+  }, [router.query]);
+
+  const catRouting = (cat: string) => {
+    let catString = (router.query.category as string) || "";
+
+    if (catString.includes("+" + cat)) {
+      catString = catString.replace("+" + cat, "");
+    } else if (catString.includes(" " + cat)) {
+      catString = catString.replace(" " + cat, "");
+    } else {
+      catString = catString + "+" + cat;
+    }
+
+    router.push({
+      pathname: router.pathname,
+      query: {
+        ...router.query,
+        category: catString,
+      },
+    });
+  };
 
   return (
     <li className="mb-5 flex gap-x-[14px] items-center">
@@ -20,8 +51,8 @@ const FilterCheckCategory: React.FC<Props> = (props) => {
         value={cat_slug}
         type="checkbox"
         name={`${cat_name}`}
-        onChange={(e) => controller.setSearchCategory(e.target.value, false)}
-        checked={states.searchCategory.includes(cat_slug)}
+        onChange={(e) => catRouting(e.target.value)}
+        checked={checked}
       />
       <label
         htmlFor={"cat_" + cat_slug}

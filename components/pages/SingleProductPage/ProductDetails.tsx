@@ -2,9 +2,11 @@ import React, { useState, Dispatch, SetStateAction, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { controller } from "../../../src/state/StateController";
 import { FacebookShareButton, TwitterShareButton } from "react-share";
-import { FaRegHeart, FaFlag } from "react-icons/fa";
-// import ReactStars from "react-rating-stars-component";
 import { useRouter } from "next/router";
+import { FaFlag, FaRegStar, FaStarHalfAlt, FaStar } from "react-icons/fa";
+//@ts-ignore
+import ReactStars from "react-rating-stars-component";
+
 import FacebookIcon from "react-share/lib/FacebookIcon";
 import TwitterIcon from "react-share/lib/TwitterIcon";
 import {
@@ -13,24 +15,51 @@ import {
   IWishlistProduct,
 } from "../../../interfaces/models";
 import { EcommerceApi } from "../../../src/API/EcommerceApi";
-import { CartHandler } from "../../../src/utils/CartHandler";
-import { CookiesHandler } from "../../../src/utils/CookiesHandler";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
+import toast from "react-hot-toast";
 
 interface Props {
-  // brand: string;
   singleProduct: IProduct | null;
   setReportModalSlug: Dispatch<SetStateAction<string>>;
 }
 
-const user_slug = CookiesHandler.getSlug();
-
 const ProductDetails: React.FC<Props> = (props) => {
   const { singleProduct } = props;
   const states = useSelector(() => controller.states);
+  const user_slug = states.user?.slug;
+
   const [brandName, setBrandName] = useState<string | undefined>("");
+  const [avgRating, setAvgRating] = useState(0);
+  const [totalReview, setTotalReview] = useState(0);
+  const [categoryName, setCategoryName] = useState<string | undefined>("");
+
+  const { asPath } = useRouter();
+  let productSlug = asPath.split("=")[1];
 
   let selectedItem: ICartProduct | undefined;
+
+  const [cartQuantity, setCartQuantity] = useState<number>(
+    selectedItem?.quantity || 1
+  );
+
+  const { setReportModalSlug } = props;
+
+  const getProductReviews = async () => {
+    let rating = 0;
+    const { res, err } = await EcommerceApi.getAllProductReviews(
+      singleProduct?.slug
+    );
+    if (res?.length !== 0) {
+      setTotalReview(res.length);
+      res.map((data) => {
+        rating = rating + data.rating / res.length;
+        setAvgRating(rating);
+      });
+    } else if (res?.length === 0) {
+      setTotalReview(0);
+      setAvgRating(0);
+    }
+  };
 
   if (singleProduct) {
     selectedItem = states?.cartlistData?.find(
@@ -38,9 +67,17 @@ const ProductDetails: React.FC<Props> = (props) => {
     );
   }
 
-  const [cartQuantity, setCartQuantity] = useState<number>(
-    selectedItem?.quantity || 1
-  );
+  useEffect(() => {
+    const handleCategory = () => {
+      if (states.categories && singleProduct && singleProduct.catSlug) {
+        let cat = states.categories.find(
+          (cat) => cat.cat_slug === singleProduct.catSlug
+        );
+        setCategoryName(cat?.cat_name);
+      }
+    };
+    handleCategory();
+  }, [singleProduct, productSlug]);
 
   useEffect(() => {
     const handleBrand = () => {
@@ -52,63 +89,70 @@ const ProductDetails: React.FC<Props> = (props) => {
       }
     };
     handleBrand();
-  }, [singleProduct]);
-  const { setReportModalSlug } = props;
-  const router = useRouter();
+    getProductReviews();
+  }, [singleProduct, productSlug]);
 
-  const shareableRoute = process.env.NEXT_PUBLIC_API_ENDPOINT + router.asPath;
-  // const shareableRoute = "https://www.google.com" || undefined;
-
-  // console.log({ shareableRoute, router });
+  const shareableRoute = process.env.NEXT_PUBLIC_API_ENDPOINT + asPath;
 
   const handleIncreaseQuantity = async (item: ICartProduct) => {
+    if (!user_slug) {
+      toast.error("Please Login First");
+      return;
+    }
+
     if (!item.stock) {
-      alert("Sorry, this product is out of stock. Please add to wishlist instead.");
+      toast.error(
+        "Sorry, this product is out of stock. Please add to wishlist instead."
+      );
       return;
     }
 
     if (item.stock && cartQuantity > item.stock) {
-      alert("Cart quantity cannot be more than available stock");
+      toast.error("Cart quantity cannot be more than available stock");
       return;
     }
 
     if (cartQuantity > 10) {
-      alert("Sorry, One can not buy more than 10 units of a single product.");
+      toast.error(
+        "Sorry, One can not buy more than 10 units of a single product."
+      );
+      return;
     }
 
-    if (user_slug) {
-      if (!states?.cartlistData?.some((prd) => prd.slug === item.slug)) {
-        const cartProductData = {
-          user_slug: user_slug,
-          product_slug: singleProduct?.slug,
-          quantity: 1,
-        };
+    controller.setApiLoading(true);
+    if (!states?.cartlistData?.some((prd) => prd.slug === item.slug)) {
+      const cartProductData = {
+        user_slug: user_slug,
+        product_slug: singleProduct?.slug,
+        quantity: 1,
+      };
 
-        const { res, err } = await EcommerceApi.addToCart(cartProductData);
+      const { res, err } = await EcommerceApi.addToCart(cartProductData);
 
-        if (res) {
-          const newProduct = {
-            ...singleProduct,
-            cart_slug: res.slug,
-          };
-
-          //@ts-ignore
-          controller.setAddToCartListWithQuantity(newProduct, cartQuantity);
-        } else {
-          console.log(err);
-          alert("Failed");
-        }
-      } else {
+      if (res) {
         const newProduct = {
           ...singleProduct,
+          cart_slug: res.slug,
         };
 
         //@ts-ignore
         controller.setAddToCartListWithQuantity(newProduct, cartQuantity);
+        toast.success("Added to cart");
+      } else {
+        console.log(err);
+        toast.error("Failed");
       }
     } else {
-      alert("Please Login First");
+      const newProduct = {
+        ...singleProduct,
+      };
+
+      //@ts-ignore
+      controller.setAddToCartListWithQuantity(newProduct, cartQuantity);
+      toast.success("Added to cart");
     }
+
+    controller.setApiLoading(false);
   };
 
   const isInWishlist = (slug: string | undefined) => {
@@ -121,6 +165,12 @@ const ProductDetails: React.FC<Props> = (props) => {
   };
 
   const handleWishlist = async () => {
+    if (!user_slug) {
+      toast.error("Please Login First");
+      return;
+    }
+
+    controller.setApiLoading(true);
     //@ts-ignore
     const newProduct: IWishlistProduct = { ...singleProduct };
     //@ts-ignore
@@ -132,8 +182,8 @@ const ProductDetails: React.FC<Props> = (props) => {
       if (err) {
         console.log(err);
       } else {
-        console.log(res);
         controller.setAddtoWishlist(newProduct);
+        toast.success("Added to wishlist");
       }
     } else {
       const { res, err } = await EcommerceApi.deleteWishlistSingleProduct(
@@ -143,8 +193,11 @@ const ProductDetails: React.FC<Props> = (props) => {
       if (err) {
       } else {
         controller.setRemoveWishlistSingleProduct(newProduct);
+        toast.success("Removed from wishlist");
       }
     }
+
+    controller.setApiLoading(false);
   };
 
   return (
@@ -153,95 +206,72 @@ const ProductDetails: React.FC<Props> = (props) => {
         {brandName}
       </span>
 
-      <h1 className="text-xl text-qblack font-medium mb-4">
+      <h1 className="text-xl text-qblack font-medium mb-4 capitalize">
         {props.singleProduct?.productName}
       </h1>
 
       <div className="flex gap-x-[10px] items-center mb-6">
         <div className="flex">
-          <span className="text-gray-500">
-            <svg
-              width="18"
-              height="17"
-              viewBox="0 0 18 17"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M9 0L11.0206 6.21885H17.5595L12.2694 10.0623L14.2901 16.2812L9 12.4377L3.70993 16.2812L5.73056 10.0623L0.440492 6.21885H6.97937L9 0Z"
-                fill="#D2D8E1"
-              ></path>
-            </svg>
-          </span>
-          <span className="text-gray-500">
-            <svg
-              width="18"
-              height="17"
-              viewBox="0 0 18 17"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M9 0L11.0206 6.21885H17.5595L12.2694 10.0623L14.2901 16.2812L9 12.4377L3.70993 16.2812L5.73056 10.0623L0.440492 6.21885H6.97937L9 0Z"
-                fill="#D2D8E1"
-              ></path>
-            </svg>
-          </span>
-          <span className="text-gray-500">
-            <svg
-              width="18"
-              height="17"
-              viewBox="0 0 18 17"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M9 0L11.0206 6.21885H17.5595L12.2694 10.0623L14.2901 16.2812L9 12.4377L3.70993 16.2812L5.73056 10.0623L0.440492 6.21885H6.97937L9 0Z"
-                fill="#D2D8E1"
-              ></path>
-            </svg>
-          </span>
-          <span className="text-gray-500">
-            <svg
-              width="18"
-              height="17"
-              viewBox="0 0 18 17"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M9 0L11.0206 6.21885H17.5595L12.2694 10.0623L14.2901 16.2812L9 12.4377L3.70993 16.2812L5.73056 10.0623L0.440492 6.21885H6.97937L9 0Z"
-                fill="#D2D8E1"
-              ></path>
-            </svg>
-          </span>
-          <span className="text-gray-500">
-            <svg
-              width="18"
-              height="17"
-              viewBox="0 0 18 17"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M9 0L11.0206 6.21885H17.5595L12.2694 10.0623L14.2901 16.2812L9 12.4377L3.70993 16.2812L5.73056 10.0623L0.440492 6.21885H6.97937L9 0Z"
-                fill="#D2D8E1"
-              ></path>
-            </svg>
-          </span>
+          {singleProduct && avgRating !== 0 && (
+            <ReactStars
+              count={5}
+              value={avgRating}
+              edit={false}
+              size={24}
+              isHalf={true}
+              emptyIcon={<FaRegStar />}
+              halfIcon={<FaStarHalfAlt />}
+              fullIcon={<FaStar />}
+              activeColor="#FFA800"
+              color="#d3d3d3"
+            />
+          )}
+          {singleProduct && avgRating === 0 && (
+            <ReactStars
+              count={5}
+              value={0}
+              edit={false}
+              size={24}
+              isHalf={true}
+              emptyIcon={<FaRegStar />}
+              halfIcon={<FaStarHalfAlt />}
+              fullIcon={<FaStar />}
+              activeColor="#FFA800"
+              color="#d3d3d3"
+            />
+          )}
         </div>
-        <span className="text-[13px] font-normal text-qblack">
-          {/* {props.itemDetail?.reviews?.length}  */}
-          Reviews
-        </span>
+
+        {singleProduct && totalReview !== 0 && (
+          <span className="font-semibold text-[15px]  text-qblack">
+            {" "}
+            {totalReview} Reviews
+          </span>
+        )}
+        {singleProduct && totalReview === 0 && (
+          <span className="font-semibold text-[15px]  text-qblack">
+            {" "}
+            {totalReview} Reviews
+          </span>
+        )}
       </div>
 
       <div className="flex gap-x-2 items-baseline mb-7">
-        <span className="font-semibold line-through text-qgray text-[15px]">
+        <span
+          className={`${
+            props.singleProduct?.offerPrice
+              ? "line-through text-qgray"
+              : "text-red-500 text-[24px]"
+          }  font-semibold  text-[15px]`}
+        >
           ${props.singleProduct?.price}
         </span>
         <span className="text-red-500 font-semibold text-[24px] ml-2">
-          ${props.singleProduct?.offerPrice}
+          {props.singleProduct?.offerPrice ? `$` : ""}
+
+          {props.singleProduct?.offerPrice
+            ? props.singleProduct?.offerPrice
+            : ""}
         </span>
       </div>
 
@@ -310,7 +340,6 @@ const ProductDetails: React.FC<Props> = (props) => {
               )
             }
           </span>
-          {/* </> */}
         </button>
 
         <div className="flex-1 h-full">
@@ -328,7 +357,7 @@ const ProductDetails: React.FC<Props> = (props) => {
 
       <div className="mb-[20px]">
         <p className="text-[13px] text-qgray leading-7">
-          <span className="text-qblack">Category :</span>
+          <span className="text-qblack">Category : {categoryName}</span>
         </p>
       </div>
 

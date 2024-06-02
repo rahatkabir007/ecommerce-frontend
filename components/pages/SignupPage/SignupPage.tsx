@@ -16,7 +16,7 @@ const SignupPage: React.FC<Props> = (props) => {
         <div className="container-x mx-auto">
           <div className="lg:flex items-center relative w-full lg:min-h-[700px]">
             <Signup />
-            <SharedLoginSignupImage />
+            <SharedLoginSignupImage page="signup" />
           </div>
         </div>
       </div>

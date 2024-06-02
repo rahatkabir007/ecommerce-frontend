@@ -14,7 +14,7 @@ const SharedEmptyCart: React.FC<Props> = (props) => {
 
   return (
     <div className="mb-16 mt-10">
-      <div className="container-x mx-auto">
+      <div className="container-x mx-auto hidden md:block">
         <div className="font-400 text-[13px] text-qblack mb-[23px] print:hidden">
           <span>
             <Link href="/">

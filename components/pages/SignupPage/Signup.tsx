@@ -6,87 +6,83 @@ import Styles from "./signup.module.css";
 import Link from "next/link";
 import { SocialLogin } from "../../helpers/SocialLogin";
 import { EcommerceApi } from "../../../src/API/EcommerceApi";
-import { CookiesHandler } from "../../../src/utils/CookiesHandler";
 import { IUser } from "../../../interfaces/models";
-interface Props { }
+import toast from "react-hot-toast";
+import { useRouter } from "next/router";
+interface Props {}
 
 const Signup: React.FC<Props> = (props) => {
   const states = useSelector(() => controller.states);
   const [checked, setChecked] = useState(false);
-
-  // const [email, setEmail] = useState('');
+  const router = useRouter();
+  
   const [error, setError] = useState(false);
-  const [errorText, setErrorText] = useState('');
-  // const [success, setSuccess] = useState(false);
-  // const [successText, setSuccessText] = useState('')
+  const [errorText, setErrorText] = useState("");
 
+  const [sendVerifyText, setSendVerifyText] = useState(false);
 
-  const [sendVerifyText, setSendVerifyText] = useState(false)
-
+  if (sendVerifyText) {
+    toast.success("Signed up & Verification sent");
+  }
 
   useEffect(() => {
-    SocialLogin.initFirebase()
-  }, [])
+    SocialLogin.initFirebase();
+  }, []);
 
-  //sign Up
   const handleEmailPasswordSignUp = async (e: any) => {
     e.preventDefault();
-    console.log(e.target.password.value)
-    const password = e.target.password.value
-    const firstName = e.target.fname.value
-    const lastName = e.target.lname.value
+
+    const password = e.target.password.value;
+    const firstName = e.target.fname.value;
+    const lastName = e.target.lname.value;
     const displayName = firstName.concat(" ", lastName);
     const email = e.target.email.value;
 
     if (e.target.password.value.length < 6) {
-      setError(true)
-      setErrorText('password must be 6 characters minimum')
-    }
-    else {
-      console.log('display', displayName)
-      console.log('email', email);
-      console.log('pass', password);
-      const { res, err } = await SocialLogin.signUpWithEmailPassword(displayName, email, password)
+      setError(true);
+      toast.error("password must be 6 characters minimum");
+      
+    } else {
+      const { res, err } = await SocialLogin.signUpWithEmailPassword(
+        displayName,
+        email,
+        password
+      );
       if (err) {
-        setError(true)
-        setErrorText(err)
-      }
-      else {
-        console.log('resooooo', res)
+        setError(true);
+        toast.error(err);
+        
+      } else {
         const token = res?.user?.accessToken;
-        const user = res.user
-        console.log('use,tok', user?.email);
-        console.log('dis', user?.displayName);
+        const user = res.user;
+        
         if (token && user?.email) {
-          console.log('enter');
           const { email } = user;
           const data: Partial<IUser> = {
             token: token,
-            tokenType: 'email',
+            tokenType: "email",
             email: email,
-            avatar: 'https://tinyurl.com/382e6w5t',
+            avatar: "https://tinyurl.com/382e6w5t",
             fullName: displayName,
-            role: 'buyer'
-          }
+            role: "buyer",
+          };
+
           const { res, err } = await EcommerceApi.login(data);
           if (err) {
-            setError(true)
-            // setSuccess(false)
-            setErrorText('Database Server Error')
-            SocialLogin.loginWithEmailPasswordAfterServerError()
+            setError(true);
+            toast.error("Database Server Error");
+            SocialLogin.loginWithEmailPasswordAfterServerError();
+          
+          } else {
+            SocialLogin.sendEmail();
+            setSendVerifyText(true);
+            setError(false);
+            router.push("/login");
           }
-          else {
-
-            SocialLogin.sendEmail()
-            setSendVerifyText(true)
-            setError(false)
-          }
-
-
         }
       }
     }
-  }
+  };
 
   return (
     <div className="lg:w-[572px] w-full lg:h-auto bg-white flex flex-col justify-center sm:p-10 p-5 border border-[#E0E0E0]">
@@ -112,7 +108,10 @@ const Signup: React.FC<Props> = (props) => {
             </svg>
           </div>
         </div>
-        <form className="input-area" onSubmit={(e) => handleEmailPasswordSignUp(e)}>
+        <form
+          className="input-area"
+          onSubmit={(e) => handleEmailPasswordSignUp(e)}
+        >
           <div className="flex sm:flex-row flex-col space-y-5 sm:space-y-0 sm:space-x-5 mb-5">
             <div className="h-full">
               <div className="input-com w-full h-full">
@@ -254,8 +253,8 @@ const Signup: React.FC<Props> = (props) => {
             </p>
           </div>
         </form>
-        {error && <div style={{ color: 'red' }}>{errorText}</div>}
-        {sendVerifyText && <div style={{ backgroundColor: 'red', borderRadius: '10px', margin: '10px 0', width: '250px', color: 'white' }}>Signed up & Verification sent </div>}
+        {error && <div style={{ color: "red" }}>{errorText}</div>}
+        {/* {sendVerifyText && <div>Signed up & Verification sent </div>} */}
       </div>
     </div>
   );

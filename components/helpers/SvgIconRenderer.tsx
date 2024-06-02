@@ -64,8 +64,8 @@ const SvgIconRenderer: React.FC<Props> = (props) => {
       <path
         fill={pathFill ?? "#FFF"}
         d={path}
-        fill-rule={fillRule}
-        clip-rule={clipRule}
+        fillRule={fillRule}
+        clipRule={clipRule}
       />
     </svg>
   );

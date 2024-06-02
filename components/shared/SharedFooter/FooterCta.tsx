@@ -3,24 +3,31 @@ import { useSelector } from "react-redux";
 import { controller } from "../../../src/state/StateController";
 import { MdOutlineMail } from "react-icons/md";
 import { EcommerceApi } from "../../../src/API/EcommerceApi";
+import toast from "react-hot-toast";
 
 interface Props {}
 
 const FooterCta: React.FC<Props> = (props) => {
   const states = useSelector(() => controller.states);
+
   const addSubscriber = async (e: any) => {
     e.preventDefault();
+    controller.setApiLoading(true);
+
     const subs = {
       email: e.target.email.value,
       user_slug: states.user?.slug,
     };
-    const { res, err } = await EcommerceApi.addSubscriber(subs);
-    if (res) {
-      // console.log(res);
-      e.target.reset();
+    if (states.user) {
+      const { res, err } = await EcommerceApi.addSubscriber(subs);
+      if (res) {
+        e.target.reset();
+        toast.success("Successfuly subscribed  !");
+      }
     } else {
-      console.log(err);
+      toast.error("Please, Log In first  !");
     }
+    controller.setApiLoading(false);
   };
 
   return (

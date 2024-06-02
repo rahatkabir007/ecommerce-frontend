@@ -37,9 +37,7 @@ const ProfileWishlist: React.FC<Props> = (props) => {
           </div>
         </div>
       ) : (
-        <>
-          <WishlistCart></WishlistCart>
-        </>
+        <WishlistCart />
       )}
     </div>
   );

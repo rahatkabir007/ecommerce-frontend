@@ -1,0 +1,36 @@
+.file-logo {
+  width: 10%;
+  padding: 18px;
+  height: 10px;
+  margin-left: 160px;
+  margin-top: -60px;
+  cursor: pointer;
+  background-image: url("../../../public/images/icon.png");
+  background-position: center;
+  background-size: cover;
+  border-radius: 50%;
+}
+
+.file-logo::file-selector-button {
+  visibility: hidden;
+}
+
+/* -----------cover ------------- */
+.file-cover {
+  position: absolute;
+  width: 10%;
+  padding: 18px;
+  height: 10px;
+  margin-left: 185px;
+  margin-top: -18px;
+  cursor: pointer;
+  background-image: url("../../../public/images/icon.png");
+  cursor: pointer;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+}
+
+.file-cover::file-selector-button {
+  visibility: hidden;
+}

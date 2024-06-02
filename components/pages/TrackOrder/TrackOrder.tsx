@@ -20,6 +20,7 @@ const TrackOrder: React.FC<Props> = (props) => {
       setTrackingError("Please provide a valid order id");
       return;
     } else {
+      controller.setApiLoading(true);
       const { res, err } = await EcommerceApi.getSingleOrder(orderSlug);
       if (res) {
         router.push("/order/" + orderSlug);
@@ -28,6 +29,7 @@ const TrackOrder: React.FC<Props> = (props) => {
         setTrackingError("Order could not be found");
       }
     }
+    controller.setApiLoading(false);
   };
 
   return (
@@ -37,7 +39,7 @@ const TrackOrder: React.FC<Props> = (props) => {
           <div className="page-title-wrapper bg-[#FFFAEF] w-full  ">
             <PageHeader
               slug="track-order"
-              link="/track-order"
+              link="/track_order"
               title="Track Order"
             ></PageHeader>
           </div>

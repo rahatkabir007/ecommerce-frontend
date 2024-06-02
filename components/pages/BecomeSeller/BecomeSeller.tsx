@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import { EcommerceApi } from "../../../src/API/EcommerceApi";
 import { controller } from "../../../src/state/StateController";
 import PageHeader from "../../shared/SharedPageHeader/PageHeader";
+import toast from "react-hot-toast";
+import style from "./BecomeSeller.module.css";
 
 interface Props {}
 
@@ -11,20 +13,25 @@ const BecomeSeller: React.FC<Props> = (props) => {
 
   const [selectedLogo, setSelectedLogo] = useState(null);
   const [selectedCover, setSelectedCover] = useState(null);
+  const [applyButton, setApplyButton] = useState(false);
 
   const logoChange = (e: any) => {
     if (e.target.files && e.target.files.length > 0) {
       setSelectedLogo(e.target.files[0]);
     }
+    setApplyButton(true);
   };
   const coverChange = (e: any) => {
     if (e.target.files && e.target.files.length > 0) {
       setSelectedCover(e.target.files[0]);
     }
+    setApplyButton(true);
   };
 
   const handleSellerAdd = async (e: any) => {
     e.preventDefault();
+    controller.setApiLoading(true);
+
     const logo = e.target.logoUrl.files[0];
     const cover = e.target.coverUrl.files[0];
     const formData1 = new FormData();
@@ -45,7 +52,6 @@ const BecomeSeller: React.FC<Props> = (props) => {
         if (res?.data?.url === undefined || null) {
           coverUrl = "";
         }
-
         const email = e.target.email.value;
         const sellerData = {
           user_email: states.user?.email,
@@ -62,22 +68,18 @@ const BecomeSeller: React.FC<Props> = (props) => {
           status: "inactive",
           role: "seller",
         };
-
         const { res: sellerRes, err } = await EcommerceApi.addSeller(
           sellerData
         );
         if (!sellerRes) {
-          console.log(sellerRes);
-          alert("Already exists !");
+          toast.error("Already exists !");
         } else {
-          alert("Successfully Applied ! !");
-          // console.log(err);
+          toast.success("Successfully Applied ! !");
+          e.target.reset();
         }
-
-        console.log(sellerData, email);
-        // e.target.reset();
       }
     }
+    controller.setApiLoading(false);
   };
 
   return (
@@ -87,7 +89,6 @@ const BecomeSeller: React.FC<Props> = (props) => {
         link="/become_seller"
         title="Seller Application"
       />
-
       <div className="content-wrapper w-full my-10">
         <div className="container-x mx-auto">
           <div className="w-full bg-white sm:p-[30px] p-3">
@@ -103,17 +104,14 @@ const BecomeSeller: React.FC<Props> = (props) => {
                       as possible
                     </p>
                   </div>
-
                   <div className="input-area">
                     <div className="mb-5">
                       <div className="input-com w-full h-full">
                         <label
                           className="input-label capitalize block  mb-2 text-qgray text-[13px] font-normal"
-                          htmlFor="email"
-                        >
+                          htmlFor="email">
                           Email Address*
                         </label>
-
                         <div className="input-wrapper border  w-full h-full overflow-hidden relative border-qgray-border">
                           <input
                             required
@@ -131,8 +129,7 @@ const BecomeSeller: React.FC<Props> = (props) => {
                       <div className="input-com w-full h-full">
                         <label
                           className="input-label capitalize block  mb-2 text-qgray text-[13px] font-normal"
-                          htmlFor="phone"
-                        >
+                          htmlFor="phone">
                           phone no
                         </label>
                         <div className="input-wrapper border  w-full h-full overflow-hidden relative border-qgray-border">
@@ -162,8 +159,7 @@ const BecomeSeller: React.FC<Props> = (props) => {
                       <div className="input-com w-full h-full">
                         <label
                           className="input-label capitalize block  mb-2 text-qgray text-[13px] font-normal"
-                          htmlFor="shopname"
-                        >
+                          htmlFor="shopname">
                           Shop Name*
                         </label>
                         <div className="input-wrapper border  w-full h-full overflow-hidden relative border-qgray-border">
@@ -182,8 +178,7 @@ const BecomeSeller: React.FC<Props> = (props) => {
                       <div className="input-com w-full h-full">
                         <label
                           className="input-label capitalize block  mb-2 text-qgray text-[13px] font-normal"
-                          htmlFor="shopaddress"
-                        >
+                          htmlFor="shopaddress">
                           Address
                         </label>
                         <div className="input-wrapper border  w-full h-full overflow-hidden relative border-qgray-border">
@@ -221,10 +216,9 @@ const BecomeSeller: React.FC<Props> = (props) => {
                     <div className="signin-area mb-3">
                       <div className="flex justify-center">
                         <button
-                          // disabled={disabled}
+                          disabled={applyButton === false}
                           type="submit"
-                          className="black-btn disabled:bg-opacity-50 disabled:cursor-not-allowed text-sm text-white w-[490px] h-[50px] font-semibold flex justify-center bg-purple items-center"
-                        >
+                          className="black-btn disabled:bg-opacity-50 disabled:cursor-not-allowed text-sm text-white w-[490px] h-[50px] font-semibold flex justify-center bg-purple items-center">
                           <span>Create Seller Account</span>
                         </button>
                       </div>
@@ -292,7 +286,7 @@ const BecomeSeller: React.FC<Props> = (props) => {
                             ) : (
                               <img
                                 alt=""
-                                src="https://shopo-ecom.vercel.app/_next/image?url=https%3A%2F%2Fapi.websolutionus.com%2Fshopo%2Fuploads%2Fwebsite-images%2Fbecome_seller_avatar-2022-11-17-11-38-55-7934.png&w=1920&q=75"
+                                src="https://i.ibb.co/vzwDVb1/become-seller-avatar-2022-11-17-11-38-55-7934.webp"
                                 decoding="async"
                                 data-nimg="fill"
                                 style={{
@@ -317,24 +311,15 @@ const BecomeSeller: React.FC<Props> = (props) => {
                             <noscript></noscript>
                           </span>
                         </div>
-                        <input
-                          onChange={logoChange}
-                          type="file"
-                          className=""
-                          name="logoUrl"
-                        />
+                        {/* input field */}
 
-                        <div className="w-[32px] h-[32px] absolute bottom-7 sm:right-0 right-[105px] hover:bg-[#F539F8] bg-[#F539F8] rounded-full cursor-pointer">
-                          <svg
-                            width="32"
-                            height="32"
-                            viewBox="0 0 32 32"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                              d="M16.5147 11.5C17.7284 12.7137 18.9234 13.9087 20.1296 15.115C19.9798 15.2611 19.8187 15.4109 19.6651 15.5683C17.4699 17.7635 15.271 19.9587 13.0758 22.1539C12.9334 22.2962 12.7948 22.4386 12.6524 22.5735C12.6187 22.6034 12.5663 22.6296 12.5213 22.6296C11.3788 22.6334 10.2362 22.6297 9.09365 22.6334C9.01498 22.6334 9 22.6034 9 22.536C9 21.4009 9 20.2621 9.00375 19.1271C9.00375 19.0746 9.02997 19.0109 9.06368 18.9772C10.4123 17.6249 11.7609 16.2763 13.1095 14.9277C14.2295 13.8076 15.3459 12.6913 16.466 11.5712C16.4884 11.5487 16.4997 11.5187 16.5147 11.5Z M20.9499 14.2904C19.7436 13.0842 18.5449 11.8854 17.3499 10.6904C17.5634 10.4694 17.7844 10.2446 18.0054 10.0199C18.2639 9.76139 18.5261 9.50291 18.7884 9.24443C19.118 8.91852 19.5713 8.91852 19.8972 9.24443C20.7251 10.0611 21.5492 10.8815 22.3771 11.6981C22.6993 12.0165 22.7105 12.4698 22.3996 12.792C21.9238 13.2865 21.4443 13.7772 20.9686 14.2717C20.9648 14.2792 20.9536 14.2867 20.9499 14.2904Z"
-                              fill="white"></path>
-                          </svg>
+                        <div className="absolute">
+                          <input
+                            onChange={logoChange}
+                            type="file"
+                            name="logoUrl"
+                            className={`${style["file-logo"]}    absolute`}
+                          />
                         </div>
                       </div>
                     </div>
@@ -393,7 +378,7 @@ const BecomeSeller: React.FC<Props> = (props) => {
                             ) : (
                               <img
                                 alt=""
-                                src="https://shopo-ecom.vercel.app/_next/image?url=https%3A%2F%2Fapi.websolutionus.com%2Fshopo%2Fuploads%2Fwebsite-images%2Fbecome_seller_banner-2022-11-17-11-41-53-5886.png&w=1920&q=75"
+                                src="https://i.ibb.co/bBSrTY1/cover-img.png"
                                 decoding="async"
                                 data-nimg="fill"
                                 style={{
@@ -417,28 +402,17 @@ const BecomeSeller: React.FC<Props> = (props) => {
                             <noscript></noscript>
                           </span>
                         </div>
-                        {/* <input type="file" className="hidden" name="coverUrl" /> */}
-                        <div className="w-[32px] h-[32px] absolute -bottom-4 right-4 bg-[#F539F8] hover:bg-[#F539F8] rounded-full cursor-pointer">
-                          <svg
-                            width="32"
-                            height="32"
-                            viewBox="0 0 32 32"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                              d="M16.5147 11.5C17.7284 12.7137 18.9234 13.9087 20.1296 15.115C19.9798 15.2611 19.8187 15.4109 19.6651 15.5683C17.4699 17.7635 15.271 19.9587 13.0758 22.1539C12.9334 22.2962 12.7948 22.4386 12.6524 22.5735C12.6187 22.6034 12.5663 22.6296 12.5213 22.6296C11.3788 22.6334 10.2362 22.6297 9.09365 22.6334C9.01498 22.6334 9 22.6034 9 22.536C9 21.4009 9 20.2621 9.00375 19.1271C9.00375 19.0746 9.02997 19.0109 9.06368 18.9772C10.4123 17.6249 11.7609 16.2763 13.1095 14.9277C14.2295 13.8076 15.3459 12.6913 16.466 11.5712C16.4884 11.5487 16.4997 11.5187 16.5147 11.5Z M20.9499 14.2904C19.7436 13.0842 18.5449 11.8854 17.3499 10.6904C17.5634 10.4694 17.7844 10.2446 18.0054 10.0199C18.2639 9.76139 18.5261 9.50291 18.7884 9.24443C19.118 8.91852 19.5713 8.91852 19.8972 9.24443C20.7251 10.0611 21.5492 10.8815 22.3771 11.6981C22.6993 12.0165 22.7105 12.4698 22.3996 12.792C21.9238 13.2865 21.4443 13.7772 20.9686 14.2717C20.9648 14.2792 20.9536 14.2867 20.9499 14.2904Z"
-                              fill="white"></path>
-                          </svg>
-                        </div>
+
+                        <input
+                          type="file"
+                          onChange={coverChange}
+                          className={`${style["file-cover"]}  `}
+                          name="coverUrl"
+                        />
                       </div>
                     </div>
-                    <input
-                      onChange={coverChange}
-                      type="file"
-                      className=""
-                      name="coverUrl"
-                    />
-                    {/*cover div */}
+
+                    {/*-------------cover div--------------------- */}
                   </div>
                 </div>
               </div>
