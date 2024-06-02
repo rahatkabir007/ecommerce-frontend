@@ -21,6 +21,7 @@ const PopularCategory: React.FC<Props> = (props) => {
       if (err) {
         console.log(err);
       } else {
+        console.log(res)
         setSlug(res[0]?.cat_slug);
         setPopularCategoriesData(res);
       }
