@@ -430,19 +430,20 @@ const HeaderTop: React.FC<Props> = (props) => {
                 <div className="relative">
                   <Link rel="noreferrer" href="/">
                     <span className={`${styles["spanStyle"]}`}>
-                      <span className={`${styles["spanStyle2"]}`}>
-                        <img
+                      <span className={`${styles["spanStyle2"]} font-bold text-xl `}>
+                        <span className="text-qyellow">Shop</span> <span>Holic</span>
+                        {/* <img
                           className={`${styles["imgStyle2"]}`}
                           src="https://shopo-ecom.vercel.app/_next/image?url=https%3A%2F%2Fapi.websolutionus.com%2Fshopo%2Fuploads%2Fwebsite-images%2Flogo-2023-01-26-01-30-26-1795.png&w=256&q=75"
                           alt="logo"
-                        />
+                        /> */}
                       </span>
 
-                      <img
+                      {/* <img
                         className={`${styles["imgStyle"]}`}
                         src="https://shopo-ecom.vercel.app/_next/image?url=https%3A%2F%2Fapi.websolutionus.com%2Fshopo%2Fuploads%2Fwebsite-images%2Flogo-2023-01-26-01-30-26-1795.png&w=256&q=75"
                         alt="logo"
-                      />
+                      /> */}
                     </span>
                   </Link>
                 </div>
