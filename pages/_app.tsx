@@ -7,6 +7,7 @@ import Header from "../components/shared/SharedHeader/Header";
 import Footer from "../components/shared/SharedFooter/Footer";
 import { EcommerceApi } from "../src/API/EcommerceApi";
 import { SocialLogin } from "../components/helpers/SocialLogin";
+import "@splidejs/react-splide/css";
 
 export default function MyApp(props: AppProps) {
   const { Component, pageProps } = props;
