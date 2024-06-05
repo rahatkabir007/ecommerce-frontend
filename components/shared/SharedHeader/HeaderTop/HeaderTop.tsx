@@ -279,9 +279,7 @@ const HeaderTop: React.FC<Props> = (props) => {
                   <div className=" flex justify-between items-center px-5 h-10 bg-white hover:bg-qyellow transition-all duration-300 ease-in-out cursor-pointer">
                     <div className="flex items-center space-x-6">
                       <span>
-                        <span>
-                          <AnchorIcon />
-                        </span>
+                        <img className="w-[15px] h-[15px]" src={category?.cat_image} alt={category?.cat_name} />
                       </span>
                       <span
                         className="text-sm font-normal capitalize"
@@ -858,18 +856,19 @@ const HeaderTop: React.FC<Props> = (props) => {
                   className="h-full flex justify-center items-center"
                 >
                   <span className={`${styles["spanStyle"]}`}>
-                    <span className={`${styles["spanStyle2"]}`}>
-                      <img
+                    <span className={`${styles["spanStyle2"]} font-bold text-xl`}>
+                          <span className="text-qyellow">Shop</span> <span>Holic</span>
+                      {/* <img
                         className={`${styles["imgStyle2"]}`}
                         src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%27153%27%20height=%2744%27/%3e"
                         alt="logo"
-                      />
+                      /> */}
                     </span>
-                    <img
+                    {/* <img
                       className={`${styles["imgStyle"]}`}
                       src="https://shopo-ecom.vercel.app/_next/image?url=https%3A%2F%2Fapi.websolutionus.com%2Fshopo%2Fuploads%2Fwebsite-images%2Flogo-2022-11-22-11-19-02-4634.png&w=256&q=75"
                       alt="logo"
-                    />
+                    /> */}
                   </span>
                 </Link>
               </div>

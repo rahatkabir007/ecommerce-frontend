@@ -1,5 +1,5 @@
-import { Splide, SplideSlide } from "@splidejs/react-splide";
-import { useRef, useEffect, ReactNode } from "react";
+import { Splide } from "@splidejs/react-splide";
+import { useRef, ReactNode } from "react";
 
 interface SharedSliderProps {
     children: ReactNode;
@@ -14,24 +14,22 @@ const SharedSlider = ({ children, items }: SharedSliderProps) => {
         perPage: items,
         perMove: 1,
         pagination: false,
-        gap: 2,
+        gap: 10,
         arrows: true,
         type: "slide",
         wheel: true,
         releaseWheel: true,
         waitForTransition: true,
         breakpoints: {
-            950: {
-                perPage: 2,
+            1130: {
+                perPage: 4,
                 perMove: 1,
             },
-            640: {
-                arrows: true,
+            840: {
                 perPage: 2,
                 perMove: 1,
             },
             506: {
-                arrows: true,
                 perPage: 1,
                 perMove: 1,
                 gap: 10,

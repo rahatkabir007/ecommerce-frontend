@@ -19,7 +19,7 @@ const BestProducts: React.FC<Props> = (props) => {
           title="Best Products"
           link="products?highlight=best_product"
         />
-        <div className="grid lg:grid-cols-3 grid-cols-1 xl:gap-x-[30px] lg:gap-x-5">
+        <div className="grid lg:grid-cols-3 grid-cols-1 xl:gap-[30px] lg:gap-5">
           {states.bestProducts.map((product, i) => (
             <BestProductCard key={i} product={product} />
           ))}
