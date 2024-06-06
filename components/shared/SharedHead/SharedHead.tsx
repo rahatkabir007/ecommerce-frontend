@@ -15,23 +15,23 @@ const SharedHead: React.FC<Props> = ({ title, desc, keyword: keywords }) => {
     <Head>
       {title ? (
         <>
-          <title className="capitalize">{title + " - "}Shopo-E-Commerce</title>
+          <title className="capitalize">{title + " - "}Shop Holic-E-Commerce</title>
           <meta
             property="og:title"
-            content={title + " | Shopo-E-Commerce"}
+            content={title + " | Shop Holic-E-Commerce"}
             key="title"
           />
         </>
       ) : (
         <>
-          <title className="capitalize">Shopo-E-Commerce</title>
-          <meta property="og:title" content={"Shopo-E-Commerce"} key="title" />
+          <title className="capitalize">Shop Holic-E-Commerce</title>
+          <meta property="og:title" content={"Shop Holic-E-Commerce"} key="title" />
         </>
       )}
 
       <meta name="description" content={desc} />
       <meta name="keywords" content={keywords} />
-      <meta name="author" content="Rich IT" />
+      <meta name="author" content="Rahat" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </Head>
   );
