@@ -23,7 +23,7 @@ const ProductCategory: React.FC<Props> = (props) => {
                 <SplideSlide>
                   <div
                     key={item.cat_slug}
-                    className="item w-full cursor-pointer group  bg-blue-600"
+                    className="item w-full cursor-pointer group"
                   >
                     <Link
                       href={`products?category=%2B${item?.cat_slug}`}
