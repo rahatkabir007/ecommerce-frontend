@@ -38,7 +38,7 @@ const FooterBottom: React.FC<Props> = (props) => {
           </a>
         </div>
         <span className="sm:text-base text-[10px] font-light">
-          ©2023 RichCommerce All rights reserved
+          ©2023 Shop Holic All rights reserved
         </span>
       </div>
       <span className="mt-2 lg:mt-0">
