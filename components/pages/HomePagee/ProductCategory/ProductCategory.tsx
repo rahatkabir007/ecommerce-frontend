@@ -16,7 +16,7 @@ const ProductCategory: React.FC<Props> = (props) => {
       <div className="container-x mx-auto pb-[50px]">
         <div>
           
-          <SharedSlider items={6}>
+          <SharedSlider items={5}>
 
             {categoriesData.map((item: ICategories, index) => {
               return (

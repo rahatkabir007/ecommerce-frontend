@@ -13,6 +13,7 @@ import AD2 from "./Ads/AD2";
 import NewReleasedProducts from "./NewReleasedProducts/NewReleasedProducts";
 import AD3 from "./Ads/AD3";
 import BestProducts from "./BestProducts/BestProducts";
+import toast from "react-hot-toast";
 // import BestSeller from "./BestSeller/BestSeller";
 // import ShopByBrand from "./ShopByBrandSection/ShopByBrand";
 
@@ -54,7 +55,13 @@ const Homepage: React.FC<Props> = (props) => {
   };
 
   useEffect(() => {
-    Promise.all([fetchHomePageData(), fetchAllProducts()]);
+    controller.setApiLoading(true);
+    Promise.all([fetchHomePageData(), fetchAllProducts()])
+      .then(() => controller.setApiLoading(false))
+      .catch(() => {
+        controller.setApiLoading(false);
+        toast.error("Already exists !");
+      });
   }, []);
 
   return (
