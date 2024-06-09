@@ -5,10 +5,10 @@ import login from "../../../public/images/login.jpg";
 import Image from "next/image";
 
 interface Props {
-  page: string;
+  page?: string;
 }
 
-const SharedLoginSignupImage: React.FC<Props> = ({page}) => {
+const SharedLoginSignupImage: React.FC<Props> = ({page=""}) => {
   const states = useSelector(() => controller.states);
 
   return (
