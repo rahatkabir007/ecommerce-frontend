@@ -28,7 +28,7 @@ const ProfilePage: React.FC<Props> = (props) => {
     controller.setAllCartListData([]);
     controller.setAllWishlistData([]);
     controller.setUser(null);
-    router.reload()
+    // router.reload()
   };
 
   return (

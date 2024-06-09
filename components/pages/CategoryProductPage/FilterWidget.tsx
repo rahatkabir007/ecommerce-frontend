@@ -49,9 +49,9 @@ const FilterWidget: React.FC<Props> = (props) => {
         </ul>
       </div>
 
-      <div className="pb-10 mt-10">
+      {/* <div className="pb-10 mt-10">
         <FilterHeader title="Red" />
-      </div>
+      </div> */}
 
       <button
         type="button"

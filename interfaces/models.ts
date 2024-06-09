@@ -61,11 +61,11 @@ export interface IProduct {
   catSlug?: string;
   subCatSlug?: string;
   brandSlug?: string;
-  price?: number;
+  price: number;
   description?: string;
   status?: string;
   imageURL: Array<string | undefined>;
-  offerPrice: number;
+  offerPrice?: number;
   weight?: number;
   stock?: number;
   seoTitle?: string;

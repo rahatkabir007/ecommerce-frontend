@@ -20,6 +20,12 @@ const ItemDetailsLeft: React.FC<Props> = (props) => {
   const imageChange = (newImage: string) => {
     setImage(newImage);
   };
+
+  const discount = (price:number, offerPrice: number) => {
+    //@ts-nocheck
+    const percent = Math.floor(((price - offerPrice) / price) * 100)
+    return percent;
+  }
   return (
     <div className="w-full">
       <div className="w-full md:h-[600px] h-[350px] border border-qgray-border flex justify-center items-center overflow-hidden mb-3 relative">
@@ -63,9 +69,11 @@ const ItemDetailsLeft: React.FC<Props> = (props) => {
             }}
           ></img>
         </span>
-        <div className="w-[80px] h-[80px] rounded-full bg-qyellow text-qblack flex justify-center items-center text-xl font-medium absolute left-[30px] top-[30px]">
-          <span className="text-tblack">-5%</span>
-        </div>
+        {
+          props?.singleProduct?.offerPrice && <div className="w-[80px] h-[80px] rounded-full bg-qyellow text-qblack flex justify-center items-center text-xl font-medium absolute left-[30px] top-[30px]">
+            <span className="text-tblack">-{discount(props?.singleProduct?.price, props?.singleProduct?.offerPrice)}%</span>
+          </div>
+       }
       </div>
       <div className="flex gap-2 flex-wrap">
         {props.singleProduct?.imageURL.map((img: any) => (

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { useState, Dispatch, SetStateAction, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { controller } from "../../../src/state/StateController";
@@ -32,6 +33,12 @@ const ProductDetails: React.FC<Props> = (props) => {
   const [avgRating, setAvgRating] = useState(0);
   const [totalReview, setTotalReview] = useState(0);
   const [categoryName, setCategoryName] = useState<string | undefined>("");
+  const [showFullDescription, setShowFullDescription] = useState(false);
+
+ 
+
+  const description = props?.singleProduct?.description;
+  const shortDescription = description?.length > 400 ? description.slice(0, 400) + '...' : description;
 
   const { asPath } = useRouter();
   let productSlug = asPath.split("=")[1];
@@ -91,6 +98,10 @@ const ProductDetails: React.FC<Props> = (props) => {
     handleBrand();
     getProductReviews();
   }, [singleProduct, productSlug]);
+
+  const toggleDescription = () => {
+    setShowFullDescription(!showFullDescription);
+  };
 
   const shareableRoute = process.env.NEXT_PUBLIC_API_ENDPOINT + asPath;
 
@@ -277,11 +288,14 @@ const ProductDetails: React.FC<Props> = (props) => {
 
       <div className="mb-[30px]">
         <p className="text-qgray text-sm font-normal leading-7">
-          {props.singleProduct?.description}
+          {showFullDescription ? description : shortDescription}
         </p>
-        <button type="button" className="text-blue-500 text-xs font-bold">
-          See Less
-        </button>
+        {
+          description?.length > 400 && <button type="button" className="text-blue-500 text-xs font-bold" onClick={toggleDescription}>
+            {showFullDescription ? 'See Less' : 'See More'}
+          </button>
+        }
+        
       </div>
 
       <div className="p-3 bg-[rgb(249,243,231)] flex items-center gap-x-2 mb-[30px] rounded-lg w-fit">
@@ -356,7 +370,7 @@ const ProductDetails: React.FC<Props> = (props) => {
       </div>
 
       <div className="mb-[20px]">
-        <p className="text-[13px] text-qgray leading-7">
+        <p className="text-[13px] text-qgray leading-7 flex flex-col gap-2">
           <span className="text-qblack">Category : {categoryName}</span>
         </p>
       </div>

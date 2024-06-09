@@ -1,6 +1,5 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import Itemdetails from "../components/pages/HomePagee/ItemDetails/ItemDetails";
 import RelatedProductSection from "../components/pages/HomePagee/RelatedProductSection/RelatedProductSection";
 import SingleProduct from "../components/pages/SingleProductPage/SingleProduct";
 
@@ -14,7 +13,7 @@ const SingleProductPage: React.FC<Props> = (props) => {
   return (
     <>
       <SingleProduct />
-      <Itemdetails />
+  
       <RelatedProductSection />
     </>
   );

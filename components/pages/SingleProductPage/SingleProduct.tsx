@@ -10,6 +10,7 @@ import { EcommerceApi } from "../../../src/API/EcommerceApi";
 import { IProduct } from "../../../interfaces/models";
 import { CookiesHandler } from "../../../src/utils/CookiesHandler";
 import SharedHead from "../../shared/SharedHead/SharedHead";
+import ItemDetails from "../HomePagee/ItemDetails/ItemDetails";
 
 interface Props {}
 
@@ -101,6 +102,7 @@ const SingleProduct: React.FC<Props> = (props) => {
           </div>
         </div>
       </div>
+      <ItemDetails singleProduct={singleProduct}/>
     </>
   );
 };

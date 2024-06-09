@@ -6,6 +6,7 @@ import { EcommerceApi } from "../../../../src/API/EcommerceApi";
 import { controller } from "../../../../src/state/StateController";
 import styles from "./styles.module.css";
 import { AllCategoriesIcon, AnchorIcon, ArrowIcon, DownArrowIcon } from "../../../../src/utils/SvgReturn";
+import { useRouter } from "next/router";
 
 interface Props {}
 
@@ -13,7 +14,7 @@ const HeaderDropdown: React.FC<Props> = (props) => {
   const states = useSelector(() => controller.states);
   const [openDropdown, setOpenDropdown] = useState(false);
   const [megaMenuData, setMegaMenuData] = useState<IMegaCategory[]>([]);
-
+const router = useRouter()
   const openCategoryDropDown = () => {
     setOpenDropdown(!openDropdown);
   };
@@ -59,7 +60,11 @@ const HeaderDropdown: React.FC<Props> = (props) => {
                       <span>
                         <AllCategoriesIcon />
                       </span>
-                      <span className="text-sm font-semibold text-qblacktext">
+                      <span onClick={() => {
+                        if (!router.asPath.includes("/products?category=&min=0&max=15000")) {
+                          router.push("/products?category=&min=0&max=15000")
+                        }
+                      }} className="text-sm font-semibold text-qblacktext">
                         All Categories
                       </span>
                     </div>
