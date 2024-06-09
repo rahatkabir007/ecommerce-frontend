@@ -15,17 +15,20 @@ import {
   ReviewIcon,
   WishlistIcon,
 } from "../../../src/utils/SvgReturn";
+import { useRouter } from "next/router";
 
 interface Props {}
 
 const ProfilePage: React.FC<Props> = (props) => {
   const states = useSelector(() => controller.states);
 
+  const router= useRouter()
   const signOut = async () => {
     await SocialLogin.logOut();
     controller.setAllCartListData([]);
     controller.setAllWishlistData([]);
     controller.setUser(null);
+    router.reload()
   };
 
   return (

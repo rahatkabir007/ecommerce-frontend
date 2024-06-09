@@ -14,7 +14,7 @@ const SignupPage: React.FC<Props> = (props) => {
     <div className="w-full min-h-screen  pt-0 pb-0">
       <div className="login-page-wrapper w-full py-10">
         <div className="container-x mx-auto">
-          <div className="lg:flex items-center relative w-full lg:min-h-[700px]">
+          <div className="lg:flex items-center gap-10 relative w-full lg:min-h-[500px]">
             <Signup />
             <SharedLoginSignupImage page="signup" />
           </div>

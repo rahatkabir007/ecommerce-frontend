@@ -185,7 +185,7 @@ const LoginForm: React.FC<Props> = (props) => {
   };
 
   return (
-    <div className="lg:w-[572px] w-full h-[783px] bg-white flex flex-col justify-center sm:p-10 p-5 border border-[#E0E0E0]">
+    <div className="lg:w-[572px] w-full h-[583px] bg-white flex flex-col justify-center sm:p-10 p-5 border border-[#E0E0E0]">
       <div className="w-full">
         <div className="flex flex-col justify-center items-center relative text-center mb-7">
           <h1 className="text-[34px] font-bold leading-[74px] text-qblack">
@@ -254,12 +254,12 @@ const LoginForm: React.FC<Props> = (props) => {
           </div>
           <div className="forgot-password-area flex justify-between items-center mb-7">
             <div className="remember-checkbox flex items-center space-x-2.5">
-              <input
+              {/* <input
                 type="checkbox"
                 className="w-5 h-5 text-qblack flex justify-center items-center border border-light-gray"
                 name="remember"
-              />
-              <span className="text-base text-black">Remember Me</span>
+              /> */}
+              {/* <span className="text-base text-black">Remember Me</span> */}
             </div>
             <Link href="/forgot_password" className="hover:underline">
               Forgot password

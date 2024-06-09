@@ -74,6 +74,7 @@ const HeaderTop: React.FC<Props> = (props) => {
     controller.setAllCartListData([]);
     controller.setAllWishlistData([]);
     controller.setUser(null);
+    router.reload()
   };
 
   const handleProfileDropdown = () => {
