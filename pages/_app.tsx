@@ -28,7 +28,7 @@ export default function MyApp(props: AppProps) {
 
   useEffect(() => {
     if (isMounted) {
-      
+
     } else {
       setMounted(true);
     }
@@ -60,7 +60,7 @@ export default function MyApp(props: AppProps) {
             <Component {...pageProps} />
           </div>
           <Footer />
-          <SharedLoadingModal />
+          {/* <SharedLoadingModal /> */}
         </React.Fragment>
       </Provider>
     </>
