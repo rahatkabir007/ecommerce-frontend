@@ -7,6 +7,7 @@ import { controller } from "../../../src/state/StateController";
 import { SvgPaths } from "../../../src/utils/SvgPaths";
 import SvgIconRenderer from "../../helpers/SvgIconRenderer";
 import styles from "./ProductCardVertical.module.css";
+import { productImageUrl } from "../../../src/utils/resolveMediaUrl";
 import toast from "react-hot-toast";
 //@ts-ignore
 import ReactStars from "react-rating-stars-component";
@@ -164,23 +165,13 @@ const ProductCardVertical: React.FC<Props> = (props) => {
                   className=""
                 >
                   <picture>
-                    {product && product?.imageURL?.length > 0 && (
+                    {productImageUrl(product?.imageURL) && (
                       <img
                         decoding="async"
-                        data-nimg="fill"
-                        style={{
-                          position: "absolute",
-                          inset: 0,
-                          boxSizing: "border-box",
-                          padding: 0,
-                          border: "none",
-                          margin: "auto",
-                          display: "block",
-                          objectFit: "scale-down",
-                        }}
                         className="w-full h-full object-contain"
-                        src={product?.imageURL[0]}
-                        alt=""
+                        src={productImageUrl(product?.imageURL)}
+                        alt={product?.productName ?? ""}
+                        referrerPolicy="no-referrer"
                       />
                     )}
                   </picture>

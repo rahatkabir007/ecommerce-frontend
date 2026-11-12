@@ -2,8 +2,21 @@
 const nextConfig = {
   // reactStrictMode: true,
   images: {
-    domains: ['images.pexels.com', 'media.meds.se', 'i.ibb.co', 'lh3.googleusercontent.com', 'graph.facebook.com'], //your-external-link-hostname
-    // hostname: ["images.pexels.com"]
+    domains: [
+      "images.pexels.com",
+      "media.meds.se",
+      "i.ibb.co",
+      "i.imgbb.com",
+      "lh3.googleusercontent.com",
+      "graph.facebook.com",
+      "api.websolutionus.com",
+      "localhost",
+    ],
+    remotePatterns: [
+      { protocol: "http", hostname: "localhost", port: "8000", pathname: "/uploads/**" },
+      { protocol: "https", hostname: "i.ibb.co", pathname: "/**" },
+      { protocol: "https", hostname: "i.imgbb.com", pathname: "/**" },
+    ],
   },
   eslint: {
     // Warning: This allows production builds to successfully complete even if

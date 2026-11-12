@@ -27,7 +27,8 @@
   pointer-events: auto;
 }
 
-.nav-widget-wrapper .nav ul li:hover .sub-menu {
+.nav-widget-wrapper .nav ul li:hover .sub-menu,
+.nav-widget-wrapper .nav ul li .sub-menu.sub-menu-open {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import { productImageUrl } from "../../../../src/utils/resolveMediaUrl";
 import { useSelector } from "react-redux";
 import { IProduct } from "../../../../interfaces/models";
 import { controller } from "../../../../src/state/StateController";
@@ -20,7 +21,14 @@ const BestProductCard: React.FC<Props> = (props) => {
       <div className="flex gap-x-5 h-full items-center">
         <picture>
           {
-            product && product?.imageURL?.length > 0 && <img src={product?.imageURL[0]} className="w-[75px]" alt="" />
+            productImageUrl(product?.imageURL) && (
+              <img
+                src={productImageUrl(product?.imageURL)}
+                className="w-[75px] h-[75px] object-contain"
+                alt={product.productName}
+                referrerPolicy="no-referrer"
+              />
+            )
           }
         </picture>
 

@@ -3,6 +3,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { controller } from "../../../../../src/state/StateController";
 import ShopNowBtn from "../../../../helpers/Buttons/ShopNowBtn";
+import { resolveMediaUrl } from "../../../../../src/utils/resolveMediaUrl";
 
 interface Props {}
 
@@ -12,16 +13,15 @@ const HeroStatic: React.FC<Props> = (props) => {
 
   return (
     <div className="flex-1 hidden md:flex xl:flex-col flex-row xl:space-y-[30px] xl:h-full md:h-[350px] h-[150px] aos-init aos-animate ">
-      <div
-        className="w-full xl:h-1/2 xl:mr-o mr-2 relative flex items-center group md:pl-[40px] pl-[30px]"
-        style={{
-          backgroundImage: `url(${singleAdData?.adImage}
-            
-          )`,
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
+      <div className="w-full xl:h-1/2 xl:mr-o mr-2 relative flex items-center group md:pl-[40px] pl-[30px] overflow-hidden">
+        {resolveMediaUrl(singleAdData?.adImage) ? (
+          <img
+            src={resolveMediaUrl(singleAdData?.adImage)}
+            alt=""
+            referrerPolicy="no-referrer"
+            className="absolute inset-0 w-full h-full object-cover -z-10"
+          />
+        ) : null}
         <div className="flex flex-col justify-between">
           <div>
             <div className=" w-fit px-3 py-1 h-fit shadow  flex items-center justify-center bg-white rounded-full md:mb-[22px] mb-[15px]">
@@ -43,17 +43,15 @@ const HeroStatic: React.FC<Props> = (props) => {
           </Link>
         </div>
       </div>
-      <div
-        className="w-full xl:h-1/2 relative flex items-center pl-[40px] group"
-        style={{
-          backgroundImage: `url(
-            
-            ${singleSecondAdData?.adImage}
-          )`,
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
+      <div className="w-full xl:h-1/2 relative flex items-center pl-[40px] group overflow-hidden">
+        {resolveMediaUrl(singleSecondAdData?.adImage) ? (
+          <img
+            src={resolveMediaUrl(singleSecondAdData?.adImage)}
+            alt=""
+            referrerPolicy="no-referrer"
+            className="absolute inset-0 w-full h-full object-cover -z-10"
+          />
+        ) : null}
         <div className="flex flex-col justify-between">
           <div>
             <div className=" w-fit px-3 py-1 h-fit shadow  flex items-center justify-center bg-white rounded-full md:mb-[22px] mb-[15px]">

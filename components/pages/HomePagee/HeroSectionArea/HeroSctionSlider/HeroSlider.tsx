@@ -4,6 +4,7 @@ import { controller } from "../../../../../src/state/StateController";
 import Slider from "react-slick";
 import ShopNowBtn from "../../../../helpers/Buttons/ShopNowBtn";
 import Link from "next/link";
+import { resolveMediaUrl } from "../../../../../src/utils/resolveMediaUrl";
 
 interface Props {}
 
@@ -58,14 +59,15 @@ const HeroSlider: React.FC<Props> = (props) => {
                 style={{ width: "100%", display: " inline-block" }}
                 className="w-full h-full "
               >
-                <div
-                  className="flex w-full max-w-full relative items-center h-[220px] xl:h-[600px] md:h-[500px] lg:h-[600px] pl-[30px]"
-                  style={{
-                    backgroundImage: `url(${el.image})`,
-                    backgroundSize: "cover",
-                    backgroundRepeat: "no-repeat",
-                  }}
-                >
+                <div className="flex w-full max-w-full relative items-center h-[220px] xl:h-[600px] md:h-[500px] lg:h-[600px] pl-[30px] overflow-hidden">
+                  {resolveMediaUrl(el.image) ? (
+                    <img
+                      src={resolveMediaUrl(el.image)}
+                      alt=""
+                      referrerPolicy="no-referrer"
+                      className="absolute inset-0 w-full h-full object-cover -z-10"
+                    />
+                  ) : null}
                   <div>
                     <div className="md:w-[112px] w-[100px] shadow md:h-[25px] h-[18px] flex items-center justify-center bg-white rounded-full md:mb-[30px] mb-[15px]">
                       <span className="text-qblack uppercase md:text-xs text-[10px] font-semibold">

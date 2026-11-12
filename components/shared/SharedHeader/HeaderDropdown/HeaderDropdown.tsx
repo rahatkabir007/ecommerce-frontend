@@ -7,14 +7,18 @@ import { controller } from "../../../../src/state/StateController";
 import styles from "./styles.module.css";
 import { AllCategoriesIcon, AnchorIcon, ArrowIcon, DownArrowIcon } from "../../../../src/utils/SvgReturn";
 import { useRouter } from "next/router";
+import { resolveMediaUrl } from "../../../../src/utils/resolveMediaUrl";
 
 interface Props {}
 
 const HeaderDropdown: React.FC<Props> = (props) => {
   const states = useSelector(() => controller.states);
   const [openDropdown, setOpenDropdown] = useState(false);
+  const [shopMegaOpen, setShopMegaOpen] = useState(false);
+  const [pagesMenuOpen, setPagesMenuOpen] = useState(false);
   const [megaMenuData, setMegaMenuData] = useState<IMegaCategory[]>([]);
-const router = useRouter()
+  const sliderOne = useSelector(() => controller.states.sliderOne);
+  const router = useRouter();
   const openCategoryDropDown = () => {
     setOpenDropdown(!openDropdown);
   };
@@ -25,7 +29,7 @@ const router = useRouter()
       if (err) {
         console.log(err);
       } else {
-        setMegaMenuData(res);
+        setMegaMenuData(Array.isArray(res) ? res : []);
       }
     };
     fetchAllMegaMenuCategoriesData();
@@ -34,7 +38,7 @@ const router = useRouter()
   return (
     <div>
       <div
-        className={`${styles["nav-widget-wrapper"]} w-full  h-[60px] relative z-30  quomodo-shop-nav-bar lg:block hidden bg-qyellow`}
+        className={`${styles["nav-widget-wrapper"]} w-full min-h-[60px] h-[60px] relative z-40 overflow-visible quomodo-shop-nav-bar lg:block hidden bg-qyellow`}
       >
         <div className="container-x mx-auto h-full">
           <div className="w-full h-full relative">
@@ -91,7 +95,12 @@ const router = useRouter()
                           >
                             <div className=" flex justify-between items-center px-5 h-10 transition-all duration-300 ease-in-out cursor-pointer">
                               <div className="flex items-center space-x-6">
-                                <img className="w-[15px] h-[15px]" src={single?.cat_image} alt={single?.cat_name} />
+                                <img
+                                  className="w-[15px] h-[15px] object-contain"
+                                  src={resolveMediaUrl(single?.cat_image)}
+                                  alt={single?.cat_name}
+                                  referrerPolicy="no-referrer"
+                                />
                                 <span className="text-xs font-normal">
                                   {single?.cat_name}
                                 </span>
@@ -140,7 +149,10 @@ const router = useRouter()
                 </div>
                 <div className={`${styles["nav"]}`}>
                   <ul className="nav-wrapper flex xl:space-x-10 space-x-5">
-                    <li>
+                    <li
+                      onMouseEnter={() => setShopMegaOpen(true)}
+                      onMouseLeave={() => setShopMegaOpen(false)}
+                    >
                       <span className="flex items-center text-sm font-semibold cursor-pointer ">
                         <span>Shop</span>
                         <span className="ml-1.5 ">
@@ -148,7 +160,7 @@ const router = useRouter()
                         </span>
                       </span>
                       <div
-                        className={`${styles["sub-menu"]} w-full absolute left-0 top-[60px]`}
+                        className={`${styles["sub-menu"]} ${shopMegaOpen ? styles["sub-menu-open"] : ""} w-full absolute left-0 top-[60px] z-50`}
                       >
                         <div
                           className={`${styles["boxHeight"]} mega-menu-wrapper w-full bg-white p-[30px] flex justify-between items-center`}
@@ -182,7 +194,16 @@ const router = useRouter()
                             ))}
                           </div>
                           <div
-                            className={`${styles["background"]} thumbnil w-[348px] h-[235px] relative flex items-center pl-[40px] group`}
+                            className={`${styles["background"]} thumbnil w-[348px] h-[235px] relative flex items-center pl-[40px] group overflow-hidden`}
+                            style={
+                              resolveMediaUrl(sliderOne?.adImage)
+                                ? {
+                                    backgroundImage: `url("${resolveMediaUrl(sliderOne?.adImage)}")`,
+                                    backgroundSize: "cover",
+                                    backgroundRepeat: "no-repeat",
+                                  }
+                                : undefined
+                            }
                           >
                             <div className="flex flex-col justify-between">
                               <div>
@@ -248,7 +269,11 @@ const router = useRouter()
                         </span>
                       </Link>
                     </li>
-                    <li className="relative">
+                    <li
+                      className="relative"
+                      onMouseEnter={() => setPagesMenuOpen(true)}
+                      onMouseLeave={() => setPagesMenuOpen(false)}
+                    >
                       <span className="flex items-center text-sm font-semibold cursor-pointer ">
                         <span>Pages</span>
                         <span className="ml-1.5 ">
@@ -256,7 +281,7 @@ const router = useRouter()
                         </span>
                       </span>
                       <div
-                        className={`${styles["sub-menu"]} w-[220px] absolute left-0 top-[60px]`}
+                        className={`${styles["sub-menu"]} ${pagesMenuOpen ? styles["sub-menu-open"] : ""} w-[220px] absolute left-0 top-full z-50`}
                       >
                         <div
                           className={`${styles["box"]} w-full bg-white flex justify-between items-center `}

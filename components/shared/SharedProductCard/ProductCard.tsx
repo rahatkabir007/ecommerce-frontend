@@ -14,6 +14,7 @@ import toast from "react-hot-toast";
 import ReactStars from "react-rating-stars-component";
 import { FaRegStar, FaStar, FaStarHalfAlt } from "react-icons/fa";
 import useWindowDimensions from "../hooks/useWindowDimensions";
+import { productImageUrl } from "../../../src/utils/resolveMediaUrl";
 interface Props {
   product: IWishlistProduct;
   grid?: boolean;
@@ -152,13 +153,13 @@ const ProductCard: React.FC<Props> = ({ product, grid = false }) => {
             <div className="product-card-img w-full h-[150px] md:h-[300px] -mt-2">
               <div className="w-full h-full relative flex justify-center items-center transform scale-100 group-hover:scale-110 transition duration-300 ease-in-out mt-2">
                 <picture className="w-full h-full md:h-auto flex justify-center p-1">
-                  {product && product?.imageURL?.length > 0 && (
+                  {productImageUrl(product?.imageURL) && (
                     <img
-                      alt=""
-                      src={product?.imageURL[0]}
+                      alt={product?.productName ?? ""}
+                      src={productImageUrl(product?.imageURL)}
                       decoding="async"
-                      data-nimg="fill"
-                      className="object-contain"
+                      referrerPolicy="no-referrer"
+                      className="max-h-[140px] md:max-h-[280px] w-auto object-contain"
                     />
                   )}
                 </picture>

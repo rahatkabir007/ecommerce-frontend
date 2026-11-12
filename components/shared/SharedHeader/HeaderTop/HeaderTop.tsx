@@ -28,6 +28,7 @@ import { CookiesHandler } from "../../../../src/utils/CookiesHandler";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import { FaHome, FaUser } from "react-icons/fa";
 import { LogOutIcon } from "../../../../src/utils/SvgReturn";
+import { productImageUrl, resolveMediaUrl } from "../../../../src/utils/resolveMediaUrl";
 
 interface Props {}
 
@@ -280,7 +281,12 @@ const HeaderTop: React.FC<Props> = (props) => {
                   <div className=" flex justify-between items-center px-5 h-10 bg-white hover:bg-qyellow transition-all duration-300 ease-in-out cursor-pointer">
                     <div className="flex items-center space-x-6">
                       <span>
-                        <img className="w-[15px] h-[15px]" src={category?.cat_image} alt={category?.cat_name} />
+                        <img
+                          className="w-[15px] h-[15px] object-contain"
+                          src={resolveMediaUrl(category?.cat_image)}
+                          alt={category?.cat_name}
+                          referrerPolicy="no-referrer"
+                        />
                       </span>
                       <span
                         className="text-sm font-normal capitalize"
@@ -435,7 +441,7 @@ const HeaderTop: React.FC<Props> = (props) => {
         )}
       </div>
 
-      <header className="header-section-wrapper relative ">
+      <header className="header-section-wrapper relative z-40">
         <div className="shop-topbar w-full bg-white h-10 border-b border-qgray-border hidden md:block">
           <div className="container-x mx-auto h-full ">
             <div className="flex justify-between items-center h-full px-4 md:px-0">
@@ -656,7 +662,7 @@ const HeaderTop: React.FC<Props> = (props) => {
                                       <img
                                         alt=""
                                         sizes="100vw"
-                                        src={item.imageURL[0]}
+                                        src={productImageUrl(item.imageURL)}
                                         decoding="async"
                                         data-nimg="fill"
                                         className="w-full h-full object-contain"

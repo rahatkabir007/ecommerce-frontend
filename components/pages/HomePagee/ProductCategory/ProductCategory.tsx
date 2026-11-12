@@ -6,6 +6,7 @@ import styles from "./ProductCategory.module.css";
 import SharedSlider from "../../../shared/SharedSlider/SharedSlider";
 import { SplideSlide } from "@splidejs/react-splide";
 import { ICategories } from "../../../../interfaces/models";
+import { resolveMediaUrl } from "../../../../src/utils/resolveMediaUrl";
 interface Props {}
 
 const ProductCategory: React.FC<Props> = (props) => {
@@ -30,10 +31,15 @@ const ProductCategory: React.FC<Props> = (props) => {
                       rel="noopener noreferrer"
                     >
                       <div className="w-full h-[120px] relative rounded bg-white flex justify-center items-center">
-                        <div className="w-full h-full relative transform scale-100 group-hover:scale-110 transition duration-300 ease-in-out">
-                          <span className={styles["h"]}>
-                            <img className="!min-w-[80px] !min-h-[80px] object-cover" src={item?.cat_image} alt={item?.cat_name} />
-                          </span>
+                        <div className="w-full h-full relative transform scale-100 group-hover:scale-110 transition duration-300 ease-in-out flex items-center justify-center">
+                          {resolveMediaUrl(item?.cat_image) ? (
+                            <img
+                              className="w-[80px] h-[80px] object-contain"
+                              src={resolveMediaUrl(item?.cat_image)}
+                              alt={item?.cat_name}
+                              referrerPolicy="no-referrer"
+                            />
+                          ) : null}
                         </div>
                       </div>
                       <p className="text-base text-qgray text-center mt-5 group-hover:text-qgreen transition duration-300 ease-in-out">
