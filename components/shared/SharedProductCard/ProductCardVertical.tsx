@@ -204,7 +204,7 @@ const ProductCardVertical: React.FC<Props> = (props) => {
                       />
                     )}
                   </div>
-                  <Link href={`/single_product?slug=${product.slug}`}>
+                  <Link href={`/single_product?slug=${encodeURIComponent(product.slug)}`}>
                     <p className="title mb-1 md:mb-2 md:text-[15px] text-sm font-600 text-slate-700 font-semibold leading-[24px] line-clamp-2 hover:text-blue-600 cursor-pointer capitalize">
                       {product.productName}
                     </p>

@@ -65,7 +65,7 @@ const ProfileReviewItem: React.FC<Props> = ({
 
             <div className="flex mb-1.5"></div>
             <Link
-              href={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/single_product?slug=${reviewProducts.slug}`}
+              href={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/single_product?slug=${encodeURIComponent(reviewProducts.slug)}`}
             >
               <span className=" mb-2 sm:text-[15px] text-[13px] font-bold md:leading-[24px] line-clamp-1 hover:text-blue-600 cursor-pointer">
                 {reviewProducts.productName}

@@ -222,7 +222,7 @@ const ViewOrderDetails: React.FC<Props> = (props) => {
                               <div className="flex-1 flex flex-col">
                                 <p className="font-medium text-[15px] text-blue-500 rtl:text-right rtl:pr-10">
                                   <Link
-                                    href={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/single_product?slug=${order.slug}`}
+                                    href={`${process.env.NEXT_PUBLIC_FRONTEND_URL}/single_product?slug=${encodeURIComponent(order.slug)}`}
                                   >
                                     {order.productName}
                                   </Link>

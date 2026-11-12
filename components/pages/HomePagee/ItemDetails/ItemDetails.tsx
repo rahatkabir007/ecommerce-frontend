@@ -11,6 +11,7 @@ import { EcommerceApi } from "../../../../src/API/EcommerceApi";
 import { controller } from "../../../../src/state/StateController";
 import ReviewCard from "../../SingleProductPage/ReviewCard";
 import SellerInfo from "./SellerInfo";
+import { normalizeProductSlug } from "../../../../src/utils/productSlug";
 
 interface Props {
   singleProduct: IProduct | null;
@@ -20,12 +21,14 @@ const ItemDetails: React.FC<Props> = (props) => {
   const states = useSelector(() => controller.states);
 
   const router = useRouter();
-  const { asPath } = router;
+  const { asPath, query } = router;
   const [singleProduct, setSingleProduct] = useState<IProduct | null>(null);
   const [reviews, setReviews] = useState<IReview[]>([]);
   const [seller, setSeller] = useState<ISeller | null>(null);
 
-  const productSlug = asPath.split("=")[1];
+  const productSlug =
+    normalizeProductSlug(query.slug) ||
+    normalizeProductSlug(asPath.split("slug=")[1]?.split("&")[0]);
 
   const getProductReviews = async () => {
     const { res, err } = await EcommerceApi.getAllProductReviews(productSlug);

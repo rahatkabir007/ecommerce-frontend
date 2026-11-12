@@ -206,7 +206,7 @@ const MyCart: React.FC<Props> = (props) => {
                                 <div className="flex-1 flex flex-col">
                                   <p className="font-medium text-sm md:text-[15px] text-qblack hover:text-blue-500 cursor-pointer pt-1 md:pt-0 line-clamp-1">
                                     <Link
-                                      href={`/single_product?slug=${item.slug}`}
+                                      href={`/single_product?slug=${encodeURIComponent(item.slug)}`}
                                     >
                                       {item.productName}
                                     </Link>

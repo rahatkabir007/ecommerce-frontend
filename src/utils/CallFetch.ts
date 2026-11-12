@@ -10,11 +10,32 @@ export const callFetch = async (
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     //@ts-ignore
     fetch(url, requestOptions)
-      .then((response) => {
-        return response.json();
+      .then(async (response) => {
+        const text = await response.text();
+        if (!text.trim()) {
+          if (!response.ok) {
+            return { __empty: true, statusCode: response.status };
+          }
+          return null;
+        }
+        try {
+          return JSON.parse(text);
+        } catch {
+          return { __parseError: true, statusCode: response.status };
+        }
       })
       .then((result) => {
-        // console.log("res", result);
+        if (result?.__parseError || result?.__empty) {
+          resolve({
+            res: null,
+            err: result?.statusCode || "Invalid response",
+          });
+          return;
+        }
+        if (result === null) {
+          resolve({ res: null, err: "Not found" });
+          return;
+        }
 
         if (result?.statusCode >= 400) {
           resolve({

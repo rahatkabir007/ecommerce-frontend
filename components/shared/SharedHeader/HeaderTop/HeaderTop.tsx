@@ -665,7 +665,7 @@ const HeaderTop: React.FC<Props> = (props) => {
                                   </div>
                                   <div className="flex-1 h-full flex flex-col justify-center ">
                                     <Link
-                                      href={"single_product?slug=" + item.slug}
+                                      href={`/single_product?slug=${encodeURIComponent(item.slug)}`}
                                       className="title mb-2 text-[13px] font-semibold text-qblack leading-4 line-clamp-2 hover:text-blue-600 cursor-pointer"
                                     >
                                       {item.productName}

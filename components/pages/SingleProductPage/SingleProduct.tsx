@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { EcommerceApi } from "../../../src/API/EcommerceApi";
 import { IProduct } from "../../../interfaces/models";
 import { CookiesHandler } from "../../../src/utils/CookiesHandler";
+import { normalizeProductSlug } from "../../../src/utils/productSlug";
 import SharedHead from "../../shared/SharedHead/SharedHead";
 import ItemDetails from "../HomePagee/ItemDetails/ItemDetails";
 
@@ -29,12 +30,10 @@ const SingleProduct: React.FC<Props> = (props) => {
   useEffect(() => {
     if (!router.isReady) return;
 
-    let productSlug = query.slug;
+    const productSlug = normalizeProductSlug(query.slug);
 
     const fetchProductData = async () => {
-      const { res, err } = await EcommerceApi.getSingleProduct(
-        productSlug as string
-      );
+      const { res, err } = await EcommerceApi.getSingleProduct(productSlug);
       if (res) {
         setSingleProduct(res);
       }
@@ -78,7 +77,7 @@ const SingleProduct: React.FC<Props> = (props) => {
             <div className="container-x mx-auto ">
               <Breadcrumb
                 slug={`${singleProduct?.productName}`}
-                link={`/single_product?slug=${singleProduct?.slug}`}
+                link={`/single_product?slug=${encodeURIComponent(singleProduct?.slug ?? "")}`}
               ></Breadcrumb>
               <div className="lg:flex justify-between">
                 <div className="lg:w-1/2 xl:mr-[70px] lg:mr-[50px]">

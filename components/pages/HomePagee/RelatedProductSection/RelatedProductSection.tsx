@@ -8,6 +8,7 @@ import { EcommerceApi } from "../../../../src/API/EcommerceApi";
 import { IProduct } from "../../../../interfaces/models";
 import useWindowDimensions from "../../../shared/hooks/useWindowDimensions";
 import styles from "../../../../styles/Scrollbar.module.css";
+import { normalizeProductSlug } from "../../../../src/utils/productSlug";
 
 interface Props {}
 
@@ -16,8 +17,10 @@ const RelatedProductSection: React.FC<Props> = (props) => {
   const [relatedProduct, setRelatedProduct] = useState<any>([]);
   const { height, width } = useWindowDimensions();
 
-  const { asPath } = useRouter();
-  const productSlug = asPath.split("=")[1];
+  const { asPath, query } = useRouter();
+  const productSlug =
+    normalizeProductSlug(query.slug) ||
+    normalizeProductSlug(asPath.split("slug=")[1]?.split("&")[0]);
 
   let categorySlug: string | undefined = "";
 

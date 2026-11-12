@@ -27,7 +27,7 @@ const BestProductCard: React.FC<Props> = (props) => {
         <div className="flex-1 flex flex-col justify-center h-full">
           <Link
             className="mb-1 md:mb-2 sm:text-[15px] text-[13px] font-semibold leading-[24px] line-clamp-1 hover:text-blue-600 cursor-pointer capitalize"
-            href={"/single_product?slug=" + product.slug}
+            href={`/single_product?slug=${encodeURIComponent(product.slug)}`}
             title={product.productName}
           >
             {product.productName}

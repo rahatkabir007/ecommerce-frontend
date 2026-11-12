@@ -316,7 +316,10 @@ export class EcommerceApi {
       headers: myHeaders,
       redirect: "follow",
     };
-    return await callFetch(`${API_ENDPOINT}/products/${slug}`, requestOptions);
+    return await callFetch(
+      `${API_ENDPOINT}/products/${encodeURIComponent(slug)}`,
+      requestOptions
+    );
   }
   // ------------------------------------------------
   static async addReportedItem(

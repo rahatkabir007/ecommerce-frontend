@@ -80,7 +80,7 @@ const HeroSlider: React.FC<Props> = (props) => {
                         {el.titleTWo}
                       </h1>
                     </div>
-                    <Link href={`single_product?slug=${el.productLink}`}>
+                    <Link href={`single_product?slug=${encodeURIComponent(el.productLink)}`}>
                       <ShopNowBtn color={{ textColor: "text-qblack" }} />
                     </Link>
                   </div>

@@ -230,7 +230,7 @@ const ProductCard: React.FC<Props> = ({ product, grid = false }) => {
               </div>
               <Link
                 rel="noopener noreferrer"
-                href={`/single_product?slug=${product.slug}`}
+                href={`/single_product?slug=${encodeURIComponent(product.slug)}`}
               >
                 <p className="title md-1 md:mb-2 text-[15px] font-semibold text-qblack leading-[24px] line-clamp-2 hover:text-blue-600 cursor-pointer capitalize">
                   {product.productName}
